@@ -1,0 +1,55 @@
+{
+  "homepage": {
+    "heroTitle": "selamat datang erik",
+    "heroSubtitle": "/public/assets/pexels-shvetsa-40457001.jpg",
+    "heroDescription": "Kami tahu, ke dokter gigi sering bikin deg-degan, tapi tenang… di sini suasananya nyaman dan santai kok. Dokter dan tim kami siap membantu mulai dari perawatan ringan sampai estetik biar senyummu makin pede. Yuk, booking jadwal sekarang dan rasain sendiri perbedaannya!",
+    "heroImage": "a",
+    "ctaText": "a",
+    "ctaLink": "a",
+    "aboutTitle": "a",
+    "aboutDescription": "a"
+  },
+  "faqs": [
+    {
+      "q": "Apakah perlu janji temu terlebih dahulu?",
+      "a": "Disarankan untuk membuat janji agar kami dapat menyiapkan slot waktu yang sesuai."
+    },
+    {
+      "q": "berapa lama kontrol behel dilakukan?",
+      "a": "tiap 3 minggu harus dilakukan kontrol behel."
+    }
+  ],
+  "about": {
+    "title": "Tentang Noerdental",
+    "mission": "Memberikan pelayanan kesehatan gigi terbaik dengan teknologi modern",
+    "vision": "Menjadi klinik gigi terpercaya di Indonesia",
+    "description": "Noerdental didirikan dengan komitmen untuk memberikan perawatan gigi berkualitas tinggi.",
+    "values": [
+      "Profesional",
+      "Terpercaya",
+      "Modern",
+      "Ramah"
+    ]
+  },
+  "doctors": [
+    {
+      "name": "Jakob Gronberg",
+      "photo": "/uploads/doctor-1.jpg",
+      "joinDate": "Jan, 1992",
+      "daysDone": "189"
+    },
+    {
+      "name": "erik",
+      "photo": "/j",
+      "joinDate": "2025",
+      "daysDone": "123"
+    }
+  ],
+  "gallery": [
+    {
+      "before": "/uploads/service-1758708594360.jpg",
+      "after": "/uploads/service-1758728297205.jpg",
+      "label": "Whitening"
+    }
+  ]
+}
