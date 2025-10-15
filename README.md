@@ -1,3 +1,5 @@
+HEAD
+
 # Noerdental
 
 Next.js 14 + TypeScript + Tailwind + Prisma (MySQL) untuk informasi klinik & layanan.
@@ -29,3 +31,7 @@ Next.js 14 + TypeScript + Tailwind + Prisma (MySQL) untuk informasi klinik & lay
 ## Catatan
 
 - Fase 1: read-only. Untuk Admin & Ekspor Excel akan ditambahkan pada fase berikutnya.
+
+# Dentalweb
+
+d3ab30feb40f7ae1906b7de6cd33e1393c67c48c
