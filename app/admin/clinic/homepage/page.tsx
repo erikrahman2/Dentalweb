@@ -8,8 +8,7 @@ interface HomepageData {
   heroSubtitle: string;
   heroDescription: string;
   heroImage: string;
-  ctaText: string;
-  ctaLink: string;
+
   aboutTitle: string;
   aboutDescription: string;
 }
@@ -20,8 +19,6 @@ const defaultHomepage: HomepageData = {
   heroDescription:
     "Kami tahu, ke dokter gigi sering bikin deg-degan, tapi tenang… di sini suasananya nyaman dan santai kok. Dokter dan tim kami siap membantu mulai dari perawatan ringan sampai estetik biar senyummu makin pede. Yuk, booking jadwal sekarang dan rasain sendiri perbedaannya!",
   heroImage: "/uploads/hero.jpg",
-  ctaText: "Buat Janji Sekarang",
-  ctaLink: "/contact",
   aboutTitle:
     "NOERDENTAL Clinic adalah salah satu klinik dokter gigi terbaik di daerah pesisir selatan yang berkomitmen untuk terus berusaha memberikan pelayanan, kualitas kerja, dan fasilitas yang melebihi ekspektasi pasien.",
   aboutDescription:
@@ -169,24 +166,6 @@ export default function HomepageAdminPage() {
               value={data.aboutDescription}
               onChange={(e) => updateData("aboutDescription", e.target.value)}
               rows={4}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">CTA Text</label>
-            <input
-              type="text"
-              value={data.ctaText}
-              onChange={(e) => updateData("ctaText", e.target.value)}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">CTA Link</label>
-            <input
-              type="text"
-              value={data.ctaLink}
-              onChange={(e) => updateData("ctaLink", e.target.value)}
               className="w-full p-2 border rounded"
             />
           </div>

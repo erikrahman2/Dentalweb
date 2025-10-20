@@ -1,13 +1,12 @@
 {
   "homepage": {
     "heroTitle": "selamat datang erik",
-    "heroSubtitle": "/public/assets/pexels-shvetsa-40457001.jpg",
-    "heroDescription": "Kami tahu, ke dokter gigi sering bikin deg-degan, tapi tenang… di sini suasananya nyaman dan santai kok. Dokter dan tim kami siap membantu mulai dari perawatan ringan sampai estetik biar senyummu makin pede. Yuk, booking jadwal sekarang dan rasain sendiri perbedaannya!",
-    "heroImage": "a",
-    "ctaText": "a",
-    "ctaLink": "a",
-    "aboutTitle": "a",
-    "aboutDescription": "a"
+    "heroSubtitle": "",
+    "heroDescription": "Kami tahu, ke dokter gigi sering bikin deg-degan, \ntapi tenang… di sini suasananya nyaman dan santai kok. Dokter dan tim kami siap membantu mulai dari perawatan ringan sampai estetik biar senyummu makin pede. Yuk, booking jadwal sekarang dan rasain sendiri perbedaannya!",
+    "heroImage": "/public/assets/pexels-shvetsa-40457001.jpg",
+
+    "aboutTitle": "Kenapa Harus Noerdental?",
+    "aboutDescription": "Noer Dental adalah klinik gigi modern yang mengutamakan kenyamanan, kepercayaan, dan hasil perawatan terbaik bagi setiap pasien. Dengan dukungan dokter gigi berpengalaman, teknologi perawatan terkini, dan suasana klinik yang bersih serta tenang, kami berkomitmen memberikan pengalaman perawatan gigi yang menyenangkan tanpa rasa takut.\nKami percaya bahwa senyum indah bukan hanya tentang estetika, tapi juga tentang rasa percaya diri dan kesehatan yang menyeluruh. Dari pemeriksaan rutin hingga perawatan ortodontik dan estetika gigi, Noer Dental siap membantu Anda mendapatkan senyum terbaik Anda.\n"
   },
   "faqs": [
     {
@@ -24,12 +23,7 @@
     "mission": "Memberikan pelayanan kesehatan gigi terbaik dengan teknologi modern",
     "vision": "Menjadi klinik gigi terpercaya di Indonesia",
     "description": "Noerdental didirikan dengan komitmen untuk memberikan perawatan gigi berkualitas tinggi.",
-    "values": [
-      "Profesional",
-      "Terpercaya",
-      "Modern",
-      "Ramah"
-    ]
+    "values": ["Profesional", "Terpercaya", "Modern", "Ramah"]
   },
   "doctors": [
     {

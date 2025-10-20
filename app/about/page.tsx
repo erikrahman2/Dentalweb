@@ -25,10 +25,6 @@ export async function getAboutData(): Promise<AboutData> {
     const data = await fs.readFile(dataFile, "utf-8");
     const parsed = JSON.parse(data);
 
-    // Debug: Log data untuk cek
-    console.log("Loaded data:", parsed);
-    console.log("Doctors:", parsed.doctors);
-
     return {
       about: parsed.about || {},
       doctors: parsed.doctors || [],
@@ -36,10 +32,7 @@ export async function getAboutData(): Promise<AboutData> {
   } catch (error) {
     console.error("Error loading data:", error);
     return {
-      about: {
-        description:
-          "Noerdental Clinic berkomitmen memberikan perawatan gigi berkualitas dengan teknologi modern dan tim dokter berpengalaman.",
-      },
+      about: {},
       doctors: [],
     };
   }
@@ -51,28 +44,9 @@ export default async function AboutPage() {
   return (
     <section className="prose max-w-none">
       <h1>About Us</h1>
-      <p>
-        {about.description ||
-          "Noerdental Clinic berkomitmen memberikan perawatan gigi berkualitas dengan teknologi modern dan tim dokter berpengalaman."}
-      </p>
-      <p>
-        Jam operasional, alamat, dan kontak tersedia di halaman Contact. Silakan
-        hubungi kami untuk konsultasi.
-      </p>
+      {about.description && <p>{about.description}</p>}
 
-      {/* Debug info - hapus setelah testing */}
-      <div className="not-prose my-4 p-4 bg-yellow-50 border border-yellow-200 rounded">
-        <p className="text-sm text-gray-700">
-          Debug: Found {doctors.length} doctors
-        </p>
-        {doctors.length === 0 && (
-          <p className="text-sm text-red-600">
-            No doctors found. Please add doctors in admin panel.
-          </p>
-        )}
-      </div>
-
-      {doctors.length > 0 ? (
+      {doctors.length > 0 && (
         <div className="not-prose mt-12">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">Our Doctors</h2>
           <div className="space-y-4">
@@ -81,7 +55,6 @@ export default async function AboutPage() {
                 key={idx}
                 className="flex items-center justify-between p-6 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
               >
-                {/* Left Side - Photo & Name */}
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
                     <Image
@@ -98,7 +71,6 @@ export default async function AboutPage() {
                   </div>
                 </div>
 
-                {/* Right Side - Info & Button */}
                 <div className="flex items-center gap-8">
                   <div className="text-right">
                     <div className="text-xs text-gray-500">Join</div>
@@ -132,13 +104,6 @@ export default async function AboutPage() {
               </div>
             ))}
           </div>
-        </div>
-      ) : (
-        <div className="not-prose mt-12">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">Our Doctors</h2>
-          <p className="text-gray-600">
-            Belum ada data dokter. Silakan tambahkan di admin panel.
-          </p>
         </div>
       )}
     </section>

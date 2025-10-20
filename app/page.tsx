@@ -11,8 +11,6 @@ type HomepageConfig = {
   heroImage: string | null;
   aboutTitle: string | null;
   aboutDescription: string | null;
-  ctaText: string | null;
-  ctaLink: string | null;
 };
 
 type Service = Awaited<ReturnType<typeof prisma.service.findMany>>[number];
@@ -35,8 +33,6 @@ function HomePageContent({
     heroImage,
     aboutTitle,
     aboutDescription,
-    ctaText,
-    ctaLink,
   } = homepageConfig;
 
   const fallbackHeroImage = "/assets/pexels-shvetsa-40457001.jpg";
@@ -59,21 +55,10 @@ function HomePageContent({
 
           <div className="space-y-6">
             <div className="space-y-4">
-              <p className="text-gray-700 leading-relaxed">
-                {heroDescription ||
-                  info?.description ||
-                  "Kami siap mendampingi perjalanan senyum sehatmu dengan perawatan profesional dan suasana nyaman."}
-              </p>
-              {ctaText && (
-                <div>
-                  <Link
-                    href={ctaLink || "/contact"}
-                    className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 text-sm font-medium tracking-wide uppercase hover:bg-gray-900"
-                  >
-                    {ctaText}
-                    <span aria-hidden>→</span>
-                  </Link>
-                </div>
+              {heroDescription && (
+                <p className="text-gray-700 leading-relaxed">
+                  {heroDescription}
+                </p>
               )}
             </div>
           </div>
@@ -93,16 +78,100 @@ function HomePageContent({
       </article>
 
       {/* About Section */}
-      <section className="bg-white py-12 px-6 md:px-12 rounded-lg">
-        <div className="space-y-6">
-          <div className="space-y-4 text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              {aboutTitle || "Tentang NOERDENTAL"}
-            </h2>
-            <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">
-              {aboutDescription ||
-                "NOERDENTAL Clinic adalah salah satu klinik dokter gigi terbaik di daerah pesisir selatan yang berkomitmen untuk terus berusaha memberikan pelayanan, kualitas kerja, dan fasilitas yang melebihi ekspektasi pasien."}
+      {(aboutTitle || aboutDescription) && (
+        <section className="bg-white py-12 px-6 md:px-12 rounded-lg">
+          <div className="space-y-6">
+            <div className="space-y-4 text-center md:text-left">
+              {aboutTitle && (
+                <h2 className="text-3xl md:text-4xl font-bold">{aboutTitle}</h2>
+              )}
+              {aboutDescription && (
+                <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">
+                  {aboutDescription}
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Facilities Section */}
+      <section className="space-y-12 md:space-y-16">
+        {/* Row 1: Dental Lens (Left) + Text (Right) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+          {/* Dental Lens Image */}
+          <div className="relative w-full h-[280px] md:h-[320px]">
+            <div className="absolute top-8 left-8 right-16 bottom-16 bg-[#D4B86A] rounded-[60% 40% 70% 30% / 50% 60% 40% 50%]"></div>
+            <div className="relative w-full h-full flex items-center justify-start pl-4">
+              <div className="relative w-[92%] h-[180%]">
+                <Image
+                  src="/assets/denlens.png"
+                  alt="Dental Lens - Lensa Diagnostik"
+                  fill
+                  className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
+                  style={{
+                    filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.25))",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Text Content */}
+          <div className="space-y-4 px-4 md:px-0">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+              Fasililitas Nyaman, Alat Standar Internasional
+            </h3>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Kami percaya dengan fasilitas dan alat yang modern, setiap pasien
+              akan dengan senang hati datang ke klinik untuk merawat giginya.
+              Tidak takut lagi oleh datang ke dokter gigi!
             </p>
+            <Link
+              href="/about"
+              className="inline-block bg-[#D4B86A] hover:bg-[#C5A959] text-gray-900 px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+            >
+              More
+            </Link>
+          </div>
+        </div>
+
+        {/* Row 2: Text (Left) + Dental Chair (Right) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+          {/* Text Content */}
+          <div className="space-y-4 px-4 md:px-0 md:order-1 order-2">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+              Dokter dan Perawat yang Profesional
+            </h3>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Setiap tenaga medis yang melayani dipastikan sudah memiliki
+              sertifikasi lengkap agar hasil kerja sesuai standar terbaik untuk
+              setiap pasien.
+            </p>
+            <Link
+              href="/about"
+              className="inline-block bg-[#D4B86A] hover:bg-[#C5A959] text-gray-900 px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+            >
+              More
+            </Link>
+          </div>
+
+          {/* Dental Chair Image */}
+          <div className="relative w-full h-[280px] md:h-[320px] md:order-2 order-1">
+            <div className="absolute top-16 left-16 right-8 bottom-16 bg-[#2D7A7A] rounded-[40% 60% 30% 70% / 60% 50% 50% 40%]"></div>
+            <div className="relative w-full h-full flex items-center justify-end pr-4">
+              <div className="relative w-[90%] h-[130%]">
+                <Image
+                  src="/assets/denchair.png"
+                  alt="Dental Chair - Kursi Gigi Modern"
+                  fill
+                  className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.25)]"
+                  style={{
+                    filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.25))",
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -149,10 +218,11 @@ function HomePageContent({
                     </div>
 
                     <div className="px-6 pb-6 space-y-2 bg-white group-hover:bg-gray-50 transition-colors duration-300">
-                      <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
-                        {service.highlightDescription ||
-                          "Perawatan gigi profesional dengan teknologi modern dan tim berpengalaman."}
-                      </p>
+                      {service.highlightDescription && (
+                        <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                          {service.highlightDescription}
+                        </p>
+                      )}
                       <div className="flex justify-between items-center pt-2">
                         <span className="text-lg font-bold text-gray-900">
                           Rp{" "}
@@ -191,8 +261,6 @@ export default async function HomePage() {
     heroImage: null,
     aboutTitle: null,
     aboutDescription: null,
-    ctaText: null,
-    ctaLink: null,
   };
 
   try {
@@ -227,8 +295,6 @@ export default async function HomePage() {
         heroImage: homepageData.heroImage ?? null,
         aboutTitle: homepageData.aboutTitle ?? null,
         aboutDescription: homepageData.aboutDescription ?? null,
-        ctaText: homepageData.ctaText ?? null,
-        ctaLink: homepageData.ctaLink ?? null,
       };
     }
   } catch (err) {
