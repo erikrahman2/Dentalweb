@@ -16,6 +16,7 @@ export default function DoctorsAdminPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -81,6 +82,42 @@ export default function DoctorsAdminPage() {
     setEditingIndex(null);
   };
 
+  const handleFileUpload = async (file: File, index: number) => {
+    setUploading(true);
+    setError(null);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Upload failed");
+      }
+
+      const result = await response.json();
+      updateArrayItem(index, "photo", result.imageUrl);
+    } catch (err: any) {
+      setError(`Upload failed: ${err.message}`);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleImageChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      await handleFileUpload(file, index);
+    }
+  };
+
   if (loading) return <div className="p-4">Loading...</div>;
 
   return (
@@ -93,7 +130,7 @@ export default function DoctorsAdminPage() {
           >
             ← Back to Clinic Overview
           </Link>
-          <h1 className="text-3xl font-bold">Our Doctors</h1>
+          <h1 className="text-3xl font-bold">Our Dentists</h1>
         </div>
         <button
           onClick={handleSave}
@@ -144,7 +181,20 @@ export default function DoctorsAdminPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-medium mb-1">
-                      Photo URL
+                      Photo Upload
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageChange(e, index)}
+                      className="w-full p-2 border border-gray-300 text-sm mb-2"
+                      disabled={uploading}
+                    />
+                    {uploading && (
+                      <p className="text-xs text-blue-600 mb-2">Uploading...</p>
+                    )}
+                    <label className="block text-xs font-medium mb-1">
+                      Or Photo URL
                     </label>
                     <input
                       type="text"

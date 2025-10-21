@@ -30,6 +30,7 @@ export default function HomepageAdminPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -73,6 +74,39 @@ export default function HomepageAdminPage() {
 
   const updateData = (field: string, value: any) => {
     setData((prev) => (prev ? { ...prev, [field]: value } : prev));
+  };
+
+  const handleFileUpload = async (file: File) => {
+    setUploading(true);
+    setError(null);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Upload failed");
+      }
+
+      const result = await response.json();
+      updateData("heroImage", result.imageUrl);
+    } catch (err: any) {
+      setError(`Upload failed: ${err.message}`);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      await handleFileUpload(file);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -130,10 +164,33 @@ export default function HomepageAdminPage() {
           <div>
             <label className="block text-sm font-medium mb-1">Hero Image</label>
             <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full p-2 border rounded mb-2"
+              disabled={uploading}
+            />
+            {uploading && (
+              <p className="text-sm text-blue-600 mb-2">Uploading...</p>
+            )}
+            {data.heroImage && (
+              <div className="mb-2">
+                <img
+                  src={data.heroImage}
+                  alt="Hero preview"
+                  className="w-32 h-32 object-cover rounded"
+                />
+              </div>
+            )}
+            <label className="block text-sm font-medium mb-1">
+              Or Image URL
+            </label>
+            <input
               type="text"
               value={data.heroImage}
               onChange={(e) => updateData("heroImage", e.target.value)}
               className="w-full p-2 border rounded"
+              placeholder="https://..."
             />
           </div>
           <div>

@@ -23,25 +23,6 @@ export default function AdminLayout({
             </h3>
             <div className="space-y-1">
               <Link
-                href="/admin/services"
-                className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors"
-              >
-                <svg
-                  className="w-4 h-4 mr-3"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 11H5m14-7l-5 7-5-7m8 0l3.5 3.5m0 0L15 11m4.5-3.5L15 4"
-                  />
-                </svg>
-                Services
-              </Link>
-              <Link
                 href="/admin/clinic"
                 className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900 transition-colors"
               >

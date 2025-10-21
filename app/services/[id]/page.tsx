@@ -29,26 +29,20 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Back Navigation */}
-      <div className="mb-8">
-        <Link
-          href="/services"
-          className="text-sm text-gray-600 hover:text-gray-900 font-medium"
-        >
-          ← Back to Services
-        </Link>
-      </div>
-
       {/* Article Layout - Magazine Style */}
       <article className="space-y-8">
         {/* Header Section */}
         <header className="space-y-4">
           <div className="flex items-center gap-4 text-sm text-gray-500">
+            <Link
+              href="/services"
+              className="text-sm text-gray-600 hover:text-gray-900 font-medium"
+            >
+              ← All Services
+            </Link>
             <span>NOERDENTAL</span>
-            <span>•</span>
-            <span>{service.category || "DENTAL"}</span>
-            <span>•</span>
-            <span>Available Now</span>
+            <span>||</span>
+            <span>{service.category}</span>
           </div>
 
           {/* Main Title */}
@@ -58,7 +52,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         </header>
 
         {/* Featured Image */}
-        <div className="aspect-[16/9] bg-gray-900 flex items-center justify-center relative overflow-hidden">
+        <div className="aspect-[16/6] bg-gray-900 flex items-center justify-center relative overflow-hidden">
           {service.imageUrl ? (
             <img
               src={service.imageUrl}
@@ -118,31 +112,12 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 )}
               </div>
             </section>
-
-            {/* Quote/Testimonial Section */}
-            <section className="bg-gray-50 p-8 border-l-4 border-black">
-              <div className="space-y-4">
-                <blockquote className="text-xl font-medium italic">
-                  "The greatest glory in living lies not in never falling, but
-                  in rising every time we fall."
-                </blockquote>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center">
-                    <span className="text-gray-600 font-bold">DR</span>
-                  </div>
-                  <div>
-                    <div className="font-medium">Dr. Smith</div>
-                    <div className="text-sm text-gray-600">Lead Dentist</div>
-                  </div>
-                </div>
-              </div>
-            </section>
           </div>
 
           {/* Sidebar - Right Column */}
           <div className="space-y-8">
             {/* Service Info Card */}
-            <div className="bg-white border border-gray-200 p-6 space-y-6">
+            <div className="bg-white p-6 space-y-6">
               <h3 className="text-lg font-bold">Service Information</h3>
 
               <div className="space-y-4">
@@ -167,24 +142,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             </div>
           </div>
         </div>
-
-        {/* Bottom Navigation */}
-        <footer className="pt-8 border-t border-gray-200">
-          <div className="flex justify-between items-center">
-            <Link
-              href="/services"
-              className="text-sm text-gray-600 hover:text-gray-900"
-            >
-              ← All Services
-            </Link>
-            <div className="flex items-center gap-4 text-sm text-gray-500">
-              <span>Share:</span>
-              <button className="hover:text-gray-900">Facebook</button>
-              <button className="hover:text-gray-900">Twitter</button>
-              <button className="hover:text-gray-900">WhatsApp</button>
-            </div>
-          </div>
-        </footer>
       </article>
     </div>
   );

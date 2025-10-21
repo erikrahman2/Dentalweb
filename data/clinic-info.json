@@ -1,10 +1,9 @@
 {
   "homepage": {
-    "heroTitle": "selamat datang erik",
+    "heroTitle": "\"Inspiring smiles in every encounter.\"",
     "heroSubtitle": "",
-    "heroDescription": "Kami tahu, ke dokter gigi sering bikin deg-degan, \ntapi tenang… di sini suasananya nyaman dan santai kok. Dokter dan tim kami siap membantu mulai dari perawatan ringan sampai estetik biar senyummu makin pede. Yuk, booking jadwal sekarang dan rasain sendiri perbedaannya!",
-    "heroImage": "/public/assets/pexels-shvetsa-40457001.jpg",
-
+    "heroDescription": "Kami percaya, setiap senyum berharga. Karena itu, kami menghadirkan pengalaman perawatan gigi yang nyaman, tenang, dan penuh perhatian. Dengan tim dokter berpengalaman serta teknologi modern, kami siap membantu Anda merawat kesehatan gigi sekaligus mempercantik senyum Anda.\n                               \nTemukan rasa nyaman baru dalam setiap kunjungan, dan biarkan kami membantu Anda tampil lebih percaya diri.",
+    "heroImage": "/api/images/service-1760981964646.jpg",
     "aboutTitle": "Kenapa Harus Noerdental?",
     "aboutDescription": "Noer Dental adalah klinik gigi modern yang mengutamakan kenyamanan, kepercayaan, dan hasil perawatan terbaik bagi setiap pasien. Dengan dukungan dokter gigi berpengalaman, teknologi perawatan terkini, dan suasana klinik yang bersih serta tenang, kami berkomitmen memberikan pengalaman perawatan gigi yang menyenangkan tanpa rasa takut.\nKami percaya bahwa senyum indah bukan hanya tentang estetika, tapi juga tentang rasa percaya diri dan kesehatan yang menyeluruh. Dari pemeriksaan rutin hingga perawatan ortodontik dan estetika gigi, Noer Dental siap membantu Anda mendapatkan senyum terbaik Anda.\n"
   },
@@ -23,18 +22,23 @@
     "mission": "Memberikan pelayanan kesehatan gigi terbaik dengan teknologi modern",
     "vision": "Menjadi klinik gigi terpercaya di Indonesia",
     "description": "Noerdental didirikan dengan komitmen untuk memberikan perawatan gigi berkualitas tinggi.",
-    "values": ["Profesional", "Terpercaya", "Modern", "Ramah"]
+    "values": [
+      "Profesional",
+      "Terpercaya",
+      "Modern",
+      "Ramah"
+    ]
   },
   "doctors": [
     {
       "name": "Jakob Gronberg",
-      "photo": "/uploads/doctor-1.jpg",
+      "photo": "/api/images/service-1760982121156.jpg",
       "joinDate": "Jan, 1992",
       "daysDone": "189"
     },
     {
       "name": "erik",
-      "photo": "/j",
+      "photo": "/api/images/service-1760982133673.jpg",
       "joinDate": "2025",
       "daysDone": "123"
     }

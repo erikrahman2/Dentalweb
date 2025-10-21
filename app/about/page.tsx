@@ -46,9 +46,72 @@ export default async function AboutPage() {
       <h1>About Us</h1>
       {about.description && <p>{about.description}</p>}
 
+      {/* Visi & Misi Section */}
+      <div className="not-prose my-16 mx-[-1.24rem] lg:mx-[-7rem]">
+        <div className="grid md:grid-cols-2 gap-0  overflow-hidden shadow-lg">
+          {/* Visi Section */}
+          <div className="bg-gradient-to-br from-[#D4B068] to-[#C19A4C] p-12 transition-all duration-300 hover:shadow-2xl group">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-8 group-hover:scale-105 transition-transform duration-300">
+              VISI
+            </h2>
+            <p className="text-gray-700 leading-relaxed text-base md:text-lg group-hover:text-gray-900 transition-colors duration-300">
+              Menjadi klinik gigi terbaik dalam hal pelayanan dan kepuasan
+              pasien, serta menjadi klinik gigi andalan masyarakat seluruh
+              Provinsi di Sumatera.
+            </p>
+          </div>
+
+          {/* Misi Section */}
+          <div className="bg-gradient-to-br from-[#2C5F5F] to-[#1E4444] p-12 transition-all duration-300 hover:shadow-2xl group">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 group-hover:scale-105 transition-transform duration-300">
+              MISI
+            </h2>
+            <ol className="space-y-4 text-white leading-relaxed text-sm md:text-base group-hover:text-gray-100 transition-colors duration-300">
+              <li className="flex gap-3">
+                <span className="font-bold flex-shrink-0">1.</span>
+                <span>
+                  Selalu berusaha memberikan pelayanan yang melabihi ekspektasi
+                  pasien.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="font-bold flex-shrink-0">2.</span>
+                <span>
+                  Memberikan pelayanan yang terbaik dengan harga yang
+                  terjangkau.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="font-bold flex-shrink-0">3.</span>
+                <span>
+                  Menjadi klinik gigi yang nyaman dan bersahabat bagi keluarga.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="font-bold flex-shrink-0">4.</span>
+                <span>
+                  Mengedepankan kerjasama tim yang berorientasi terhadap
+                  kepuasan pasien.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="font-bold flex-shrink-0">5.</span>
+                <span>
+                  Memberikan edukasi kesehatan gigi dan mulut yang bermanfaat
+                  bagi masyarakat.
+                </span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      {/* Dentists Section */}
       {doctors.length > 0 && (
         <div className="not-prose mt-12">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">Our Doctors</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">
+            Our Dentists
+          </h2>
           <div className="space-y-4">
             {doctors.map((doctor: Doctor, idx: number) => (
               <div

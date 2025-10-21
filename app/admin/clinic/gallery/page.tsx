@@ -14,6 +14,10 @@ export default function GalleryAdminPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [uploading, setUploading] = useState<{
+    index: number;
+    field: string;
+  } | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -68,6 +72,43 @@ export default function GalleryAdminPage() {
     setData((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleFileUpload = async (file: File, index: number, field: string) => {
+    setUploading({ index, field });
+    setError(null);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Upload failed");
+      }
+
+      const result = await response.json();
+      updateArrayItem(index, field, result.imageUrl);
+    } catch (err: any) {
+      setError(`Upload failed: ${err.message}`);
+    } finally {
+      setUploading(null);
+    }
+  };
+
+  const handleImageChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    field: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      await handleFileUpload(file, index, field);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -99,47 +140,95 @@ export default function GalleryAdminPage() {
       <div className="bg-white border rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">Gallery</h2>
         {data.map((item, index) => (
-          <div key={index} className="mb-4 p-4 border rounded">
-            <div className="grid grid-cols-3 gap-4">
+          <div key={index} className="mb-6 p-4 border rounded">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Before</label>
+                <label className="block text-sm font-medium mb-1">
+                  Before Image
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, index, "before")}
+                  className="w-full p-2 border rounded mb-2"
+                  disabled={
+                    uploading?.index === index && uploading?.field === "before"
+                  }
+                />
+                {uploading?.index === index &&
+                  uploading?.field === "before" && (
+                    <p className="text-sm text-blue-600 mb-2">Uploading...</p>
+                  )}
+                {item.before && (
+                  <img
+                    src={item.before}
+                    alt="Before preview"
+                    className="w-full h-32 object-cover rounded mb-2"
+                  />
+                )}
+                <label className="block text-xs font-medium mb-1">Or URL</label>
                 <input
                   type="text"
                   value={item.before}
                   onChange={(e) =>
                     updateArrayItem(index, "before", e.target.value)
                   }
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded text-sm"
+                  placeholder="https://..."
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">After</label>
+                <label className="block text-sm font-medium mb-1">
+                  After Image
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, index, "after")}
+                  className="w-full p-2 border rounded mb-2"
+                  disabled={
+                    uploading?.index === index && uploading?.field === "after"
+                  }
+                />
+                {uploading?.index === index && uploading?.field === "after" && (
+                  <p className="text-sm text-blue-600 mb-2">Uploading...</p>
+                )}
+                {item.after && (
+                  <img
+                    src={item.after}
+                    alt="After preview"
+                    className="w-full h-32 object-cover rounded mb-2"
+                  />
+                )}
+                <label className="block text-xs font-medium mb-1">Or URL</label>
                 <input
                   type="text"
                   value={item.after}
                   onChange={(e) =>
                     updateArrayItem(index, "after", e.target.value)
                   }
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Label</label>
-                <input
-                  type="text"
-                  value={item.label}
-                  onChange={(e) =>
-                    updateArrayItem(index, "label", e.target.value)
-                  }
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded text-sm"
+                  placeholder="https://..."
                 />
               </div>
             </div>
+            <div className="mb-3">
+              <label className="block text-sm font-medium mb-1">Label</label>
+              <input
+                type="text"
+                value={item.label}
+                onChange={(e) =>
+                  updateArrayItem(index, "label", e.target.value)
+                }
+                className="w-full p-2 border rounded"
+                placeholder="Treatment name or description"
+              />
+            </div>
             <button
               onClick={() => removeFromArray(index)}
-              className="mt-2 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
             >
-              Delete
+              Delete Item
             </button>
           </div>
         ))}
