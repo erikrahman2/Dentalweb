@@ -182,16 +182,6 @@ export default function HomepageAdminPage() {
                 />
               </div>
             )}
-            <label className="block text-sm font-medium mb-1">
-              Or Image URL
-            </label>
-            <input
-              type="text"
-              value={data.heroImage}
-              onChange={(e) => updateData("heroImage", e.target.value)}
-              className="w-full p-2 border rounded"
-              placeholder="https://..."
-            />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">

@@ -5,8 +5,7 @@ import Link from "next/link";
 
 interface AboutData {
   title: string;
-  mission: string;
-  vision: string;
+
   description: string;
   values: string[];
 }
@@ -102,24 +101,7 @@ export default function AboutAdminPage() {
               className="w-full p-2 border rounded"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Mission</label>
-            <textarea
-              value={data.mission}
-              onChange={(e) => updateData("mission", e.target.value)}
-              rows={2}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Vision</label>
-            <textarea
-              value={data.vision}
-              onChange={(e) => updateData("vision", e.target.value)}
-              rows={2}
-              className="w-full p-2 border rounded"
-            />
-          </div>
+
           <div>
             <label className="block text-sm font-medium mb-1">
               Description

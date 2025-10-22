@@ -1,7 +1,7 @@
 {
   "homepage": {
     "heroTitle": "\"Inspiring smiles in every encounter.\"",
-    "heroSubtitle": "",
+    "heroSubtitle": "Open: sat, 3pm - 8pm   ||   sun, 9am - 8pm",
     "heroDescription": "Kami percaya, setiap senyum berharga. Karena itu, kami menghadirkan pengalaman perawatan gigi yang nyaman, tenang, dan penuh perhatian. Dengan tim dokter berpengalaman serta teknologi modern, kami siap membantu Anda merawat kesehatan gigi sekaligus mempercantik senyum Anda.\n                               \nTemukan rasa nyaman baru dalam setiap kunjungan, dan biarkan kami membantu Anda tampil lebih percaya diri.",
     "heroImage": "/api/images/service-1760981964646.jpg",
     "aboutTitle": "Kenapa Harus Noerdental?",
@@ -9,25 +9,34 @@
   },
   "faqs": [
     {
-      "q": "Apakah perlu janji temu terlebih dahulu?",
-      "a": "Disarankan untuk membuat janji agar kami dapat menyiapkan slot waktu yang sesuai."
+      "q": "Bagaimana prosedur cek gigi pertama kali?",
+      "a": "Pada kunjungan pertama, pasien akan menjalani rekam medis, pemeriksaan gigi dan gusi, serta rontgen jika diperlukan. Tenaga medis kami akan menjelaskan temuan, opsi perawatan, biaya, serta waktu pengerjaan. Tujuan utama adalah membangun rencana perawatan yang jelas dan disesuaikan dengan kebutuhan pasien."
     },
     {
-      "q": "berapa lama kontrol behel dilakukan?",
-      "a": "tiap 3 minggu harus dilakukan kontrol behel."
+      "q": "Apakah setiap Pemeriksaan menyakitkan?",
+      "a": "Setiap tindakan direncanakan dengan upaya meminimalkan nyeri dan kecemasan. Anestesi lokal digunakan sesuai kebutuhan, dan tim kami berkomitmen pada praktik pain management yang aman. Pasien dipandu untuk memahami apa yang terjadi selama perawatan agar merasa tenang."
+    },
+    {
+      "q": "Apakah saya perlu membuat reservasi terlebih dahulu?",
+      "a": "Tidak, anda bisa langsung datang ke Klinik untuk mengambil nomor antrian yang telah disediakan. "
+    },
+    {
+      "q": "Apakah layanan untuk anak tersedia?",
+      "a": "Ya. Perawatan gigi anak mencakup pemeriksaan rutin, pembersihan, edukasi kebersihan mulut, serta perawatan dasar yang ramah anak. Tim kami berfokus pada kenyamanan anak, dengan fasilitas yang bersahabat dan teknik komunikasi yang sesuai usia."
+    },
+    {
+      "q": "Bagaimana saya mendapatkan estimasi biaya sebelum perawatan?",
+      "a": "Estimasi biaya diberikan setelah evaluasi awal. Tim kami akan menjelaskan rincian biaya per layanan, opsi pembayaran, serta potensi biaya tambahan jika diperlukan rontgen, perawatan lanjutan, atau tindakan khusus."
+    },
+    {
+      "q": "Apakah saya perlu membawa rekam medis gigi saat kunjungan?",
+      "a": "Sangat dianjurkan membawa rekam medis gigi terbaru, termasuk rontgen jika ada. Ini membantu dokter memahami riwayat perawatan dan mempercepat penentuan rencana perawatan yang tepat."
     }
   ],
   "about": {
     "title": "Tentang Noerdental",
-    "mission": "Memberikan pelayanan kesehatan gigi terbaik dengan teknologi modern",
-    "vision": "Menjadi klinik gigi terpercaya di Indonesia",
     "description": "Noerdental didirikan dengan komitmen untuk memberikan perawatan gigi berkualitas tinggi.",
-    "values": [
-      "Profesional",
-      "Terpercaya",
-      "Modern",
-      "Ramah"
-    ]
+    "values": ["Profesional", "Terpercaya", "Modern", "Ramah"]
   },
   "doctors": [
     {
@@ -41,6 +50,12 @@
       "photo": "/api/images/service-1760982133673.jpg",
       "joinDate": "2025",
       "daysDone": "123"
+    },
+    {
+      "name": "dr. pof",
+      "photo": "/api/images/service-1761049378468.png",
+      "joinDate": "2025-10",
+      "daysDone": ""
     }
   ],
   "gallery": [

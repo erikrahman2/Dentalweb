@@ -15,7 +15,7 @@ export default function ClinicAdminPage() {
     },
     {
       title: "About Us",
-      description: "Configure mission, vision, values, and company description",
+      description: "Configure  values, and company description",
       href: "/admin/clinic/about",
     },
     {

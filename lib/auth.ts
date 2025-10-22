@@ -9,7 +9,8 @@ const COOKIE_NAME = "noer_token";
 export type JwtPayload = {
   sub: string;
   email: string;
-  role: "ADMIN" | "STAFF";
+  name: string;
+  role: "ADMIN" | "DOCTOR" | "STAFF";
 };
 
 export async function createSession(payload: JwtPayload) {
@@ -41,4 +42,31 @@ export async function getSession(): Promise<JwtPayload | null> {
 
 export function clearSession() {
   cookies().set(COOKIE_NAME, "", { path: "/", maxAge: 0 });
+}
+
+// RBAC Helper Functions
+export async function requireAuth() {
+  const session = await getSession();
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  return session;
+}
+
+export async function requireRole(
+  allowedRoles: Array<"ADMIN" | "DOCTOR" | "STAFF">
+) {
+  const session = await requireAuth();
+  if (!allowedRoles.includes(session.role)) {
+    throw new Error("Forbidden: Insufficient permissions");
+  }
+  return session;
+}
+
+export async function requireAdmin() {
+  return await requireRole(["ADMIN"]);
+}
+
+export async function requireDoctorOrAdmin() {
+  return await requireRole(["ADMIN", "DOCTOR"]);
 }

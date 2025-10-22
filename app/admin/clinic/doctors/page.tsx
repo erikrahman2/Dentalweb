@@ -193,18 +193,6 @@ export default function DoctorsAdminPage() {
                     {uploading && (
                       <p className="text-xs text-blue-600 mb-2">Uploading...</p>
                     )}
-                    <label className="block text-xs font-medium mb-1">
-                      Or Photo URL
-                    </label>
-                    <input
-                      type="text"
-                      value={doctor.photo}
-                      onChange={(e) =>
-                        updateArrayItem(index, "photo", e.target.value)
-                      }
-                      className="w-full p-2 border border-gray-300 text-sm"
-                      placeholder="https://..."
-                    />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>

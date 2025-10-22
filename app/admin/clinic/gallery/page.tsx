@@ -166,16 +166,6 @@ export default function GalleryAdminPage() {
                     className="w-full h-32 object-cover rounded mb-2"
                   />
                 )}
-                <label className="block text-xs font-medium mb-1">Or URL</label>
-                <input
-                  type="text"
-                  value={item.before}
-                  onChange={(e) =>
-                    updateArrayItem(index, "before", e.target.value)
-                  }
-                  className="w-full p-2 border rounded text-sm"
-                  placeholder="https://..."
-                />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -200,16 +190,6 @@ export default function GalleryAdminPage() {
                     className="w-full h-32 object-cover rounded mb-2"
                   />
                 )}
-                <label className="block text-xs font-medium mb-1">Or URL</label>
-                <input
-                  type="text"
-                  value={item.after}
-                  onChange={(e) =>
-                    updateArrayItem(index, "after", e.target.value)
-                  }
-                  className="w-full p-2 border rounded text-sm"
-                  placeholder="https://..."
-                />
               </div>
             </div>
             <div className="mb-3">

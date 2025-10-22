@@ -46,18 +46,18 @@ function HomePageContent({
             <h1 className="text-[2.9rem] lg:text-6xl md:text-7xl font-black leading-[0.9] lg:leading-[1] tracking-[-0.02em]">
               {heroTitle || "NOERDENTAL Clinic"}
             </h1>
-            {heroSubtitle && (
-              <p className="text-xl text-gray-700 leading-relaxed">
-                {heroSubtitle}
-              </p>
-            )}
           </div>
 
           <div className="space-y-6">
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               {heroDescription && (
                 <p className="text-gray-700 leading-relaxed">
                   {heroDescription}
+                </p>
+              )}
+              {heroSubtitle && (
+                <p className="text-sm text-gray-700 leading-relaxed border-t border-gray-600">
+                  {heroSubtitle}
                 </p>
               )}
             </div>

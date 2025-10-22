@@ -40,6 +40,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Cek apakah user aktif
+    if (!user.isActive) {
+      return NextResponse.json(
+        { error: "Akun tidak aktif. Hubungi administrator." },
+        { status: 403 }
+      );
+    }
+
+    // Cek apakah password sudah diset
+    if (!user.passwordHash) {
+      return NextResponse.json(
+        { error: "Password belum diset. Silakan gunakan kode OTP Anda." },
+        { status: 400 }
+      );
+    }
+
     console.log("Comparing password...");
     const ok = await bcrypt.compare(password, user.passwordHash);
     console.log("Password match:", ok);
@@ -55,6 +71,7 @@ export async function POST(req: NextRequest) {
     await createSession({
       sub: user.id,
       email: user.email,
+      name: user.name,
       role: user.role as any,
     });
 

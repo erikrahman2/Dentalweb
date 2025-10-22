@@ -17,8 +17,12 @@ export default async function FaqPage() {
 
   return (
     <section>
-      <h1 className="text-2xl font-bold mb-4">FAQ</h1>
-      <div className="space-y-4">
+      <h1 className="text-[1.2rem]  mb-4">
+        Temukan jawaban atas pertanyaan umum tentang layanan gigi kami,
+        persiapan sebelum perawatan, pembayaran, serta kebijakan klinik. Jika
+        membutuhkan info lebih lanjut, hubungi tim kami yang siap membantu.
+      </h1>
+      <div className="space-y-0.5">
         {faqs.map((f: { q: string; a: string }, i: number) => (
           <details key={i} className="group border rounded-md p-4">
             <summary className="cursor-pointer font-medium text-gray-800">
