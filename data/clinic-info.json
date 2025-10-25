@@ -36,12 +36,7 @@
   "about": {
     "title": "Tentang Noerdental",
     "description": "Noerdental didirikan dengan komitmen untuk memberikan perawatan gigi berkualitas tinggi.",
-    "values": [
-      "Profesional",
-      "Terpercaya",
-      "Modern",
-      "Ramah"
-    ]
+    "values": ["Profesional", "Terpercaya", "Modern", "Ramah"]
   },
   "doctors": [
     {
@@ -58,7 +53,13 @@
     },
     {
       "name": "dr. pof",
-      "photo": "/api/images/service-1761049378468.png",
+      "photo": "/api/images/service-1759811805720.jpg",
+      "joinDate": "2025-10",
+      "daysDone": ""
+    },
+    {
+      "name": "dr. wall",
+      "photo": "/api/images/service-1761268023779.jpg",
       "joinDate": "2025-10",
       "daysDone": ""
     }

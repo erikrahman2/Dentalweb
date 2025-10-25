@@ -2,6 +2,7 @@
 // File: app/about/page.tsx
 // ==========================================
 import Image from "next/image";
+import DentistGallery from "./DentistGallery";
 
 interface Doctor {
   name: string;
@@ -48,10 +49,10 @@ export default async function AboutPage() {
 
       {/* Visi & Misi Section */}
       <div className="not-prose my-16 mx-[-1.24rem] lg:mx-[-6.8rem]">
-        <div className="grid md:grid-cols-2 gap-0 overflow-hidden shadow-lg">
+        <div className="grid md:grid-cols-2 gap-0 overflow-hidden ">
           {/* Visi Section */}
-          <div className="bg-[#e1e6eb] p-12 transition-all duration-300 hover:bg-black hover:shadow-2xl group">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 group-hover:text-white mb-8 group-hover:scale-105 transition-all duration-300">
+          <div className=" p-12 transition-all duration-300 hover:bg-black hover:shadow-2xl group">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-800 group-hover:text-white mb-8 group-hover:scale-105 transition-all duration-300">
               VISI
             </h2>
             <p className="text-gray-700 group-hover:text-white leading-relaxed text-base md:text-lg transition-all duration-300">
@@ -67,8 +68,8 @@ export default async function AboutPage() {
           </div>
 
           {/* Misi Section */}
-          <div className="bg-[#e1e6eb] p-12 transition-all duration-300 hover:bg-black hover:shadow-2xl group">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 group-hover:text-white mb-8 group-hover:scale-105 transition-all duration-300">
+          <div className="p-12 transition-all duration-300 hover:bg-black hover:shadow-2xl group">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-800 group-hover:text-white mb-8 group-hover:scale-105 transition-all duration-300">
               MISI
             </h2>
             <ol className="space-y-4 text-gray-700 group-hover:text-white leading-relaxed text-sm md:text-base transition-all duration-300">
@@ -117,68 +118,7 @@ export default async function AboutPage() {
       </div>
 
       {/* Dentists Section */}
-      {doctors.length > 0 && (
-        <div className="not-prose mt-12">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">
-            Our Dentists
-          </h2>
-          <div className="space-y-1">
-            {doctors.map((doctor: Doctor, idx: number) => (
-              <div
-                key={idx}
-                className="flex items-center justify-between p-6 hover:bg-gray-200 border border-gray-300  hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
-                    <Image
-                      src={doctor.photo || "/placeholder-doctor.jpg"}
-                      alt={doctor.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg text-gray-900">
-                      {doctor.name}
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-8">
-                  <div className="text-right">
-                    <div className="text-xs text-gray-500">Join</div>
-                    <div className="font-medium text-gray-900">
-                      {doctor.joinDate}
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-xs text-gray-500">Day Done</div>
-                    <div className="font-medium text-gray-900">
-                      {doctor.daysDone}
-                    </div>
-                  </div>
-                  <button className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1 transition-colors">
-                    ABOUT
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {doctors.length > 0 && <DentistGallery doctors={doctors} />}
     </section>
   );
 }
