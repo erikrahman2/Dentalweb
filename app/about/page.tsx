@@ -48,13 +48,13 @@ export default async function AboutPage() {
 
       {/* Visi & Misi Section */}
       <div className="not-prose my-16 mx-[-1.24rem] lg:mx-[-6.8rem]">
-        <div className="grid md:grid-cols-2 gap-0  overflow-hidden shadow-lg">
+        <div className="grid md:grid-cols-2 gap-0 overflow-hidden shadow-lg">
           {/* Visi Section */}
-          <div className=" bg-[#dadada] p-12 transition-all duration-300 hover:shadow-2xl group">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-8 group-hover:scale-105 transition-transform duration-300">
+          <div className="bg-[#e1e6eb] p-12 transition-all duration-300 hover:bg-black hover:shadow-2xl group">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 group-hover:text-white mb-8 group-hover:scale-105 transition-all duration-300">
               VISI
             </h2>
-            <p className="text-gray-700 leading-relaxed text-base md:text-lg group-hover:text-gray-900 transition-colors duration-300">
+            <p className="text-gray-700 group-hover:text-white leading-relaxed text-base md:text-lg transition-all duration-300">
               Menjadi klinik gigi terkemuka yang unggul dalam pelayanan inovatif
               dan kepuasan pasien, dengan komitmen tinggi terhadap etika
               profesi, keselamatan pasien, serta kualitas perawatan yang
@@ -67,11 +67,11 @@ export default async function AboutPage() {
           </div>
 
           {/* Misi Section */}
-          <div className=" bg-[#686868]  p-12 transition-all duration-300 hover:shadow-2xl group">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 group-hover:scale-105 transition-transform duration-300">
+          <div className="bg-[#e1e6eb] p-12 transition-all duration-300 hover:bg-black hover:shadow-2xl group">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 group-hover:text-white mb-8 group-hover:scale-105 transition-all duration-300">
               MISI
             </h2>
-            <ol className="space-y-4 text-white leading-relaxed text-sm md:text-base group-hover:text-gray-100 transition-colors duration-300">
+            <ol className="space-y-4 text-gray-700 group-hover:text-white leading-relaxed text-sm md:text-base transition-all duration-300">
               <li className="flex gap-3">
                 <span className="font-bold flex-shrink-0">1.</span>
                 <span>

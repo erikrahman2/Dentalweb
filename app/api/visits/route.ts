@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { Prisma } from "@prisma/client";
+import { getSession } from "@/lib/auth";
 
 const CreateVisitSchema = z.object({
   patientName: z.string().min(1),
@@ -31,6 +32,7 @@ export async function GET(req: NextRequest) {
     const patientName = searchParams.get("patientName");
     const serviceName = searchParams.get("serviceName");
     const date = searchParams.get("date");
+    const dentistOnly = searchParams.get("dentistOnly") === "true";
 
     const where: Prisma.VisitWhereInput = {};
 
@@ -70,6 +72,14 @@ export async function GET(req: NextRequest) {
       };
     }
 
+    // Filter by current dentist if dentistOnly is true
+    if (dentistOnly) {
+      const session = await getSession();
+      if (session && session.role === "DOCTOR") {
+        where.createdByUserId = session.sub;
+      }
+    }
+
     const visits = await prisma.visit.findMany({
       where,
       include: {
@@ -79,6 +89,13 @@ export async function GET(req: NextRequest) {
           },
         },
         createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        doctor: {
           select: {
             id: true,
             name: true,
@@ -133,6 +150,9 @@ export async function POST(req: NextRequest) {
     }
     totalPrice -= discount;
 
+    // Get current user session
+    const session = await getSession();
+
     const created = await prisma.visit.create({
       data: {
         ...data,
@@ -140,7 +160,8 @@ export async function POST(req: NextRequest) {
         discount: new Prisma.Decimal(discount),
         total: new Prisma.Decimal(totalPrice),
         date: date ? new Date(date) : new Date(),
-        createdByUserId: null, // Atau ambil dari session jika ada
+        createdByUserId: session?.sub || null,
+        doctorId: session?.role === "DOCTOR" ? session.sub : null,
         services: {
           create: services.map((svc) => {
             if (svc.serviceId === "custom") {
@@ -165,6 +186,20 @@ export async function POST(req: NextRequest) {
         services: {
           include: {
             service: true,
+          },
+        },
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        doctor: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
           },
         },
       },
@@ -307,6 +342,20 @@ export async function PUT(req: NextRequest) {
         services: {
           include: {
             service: true,
+          },
+        },
+        createdBy: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+        doctor: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
           },
         },
       },

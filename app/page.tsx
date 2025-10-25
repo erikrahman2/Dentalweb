@@ -49,14 +49,14 @@ function HomePageContent({
           </div>
 
           <div className="space-y-6">
-            <div className="space-y-4 ">
+            <div className="space-y-4 pl-[3rem]">
               {heroDescription && (
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-l font-medium text-gray-800 ">
                   {heroDescription}
                 </p>
               )}
               {heroSubtitle && (
-                <p className="text-sm text-gray-700 leading-relaxed border-t border-gray-600">
+                <p className=" text-sm text-gray-700 leading-relaxed ">
                   {heroSubtitle}
                 </p>
               )}
@@ -64,8 +64,8 @@ function HomePageContent({
           </div>
         </div>
 
-        <div className="mt-12">
-          <div className="aspect-[16/7] relative overflow-hidden bg-gray-200">
+        <div className="mt-12 ml-[-2rem] lg:mx-[-6.8rem] relative overflow-hidden ">
+          <div className="aspect-[9/9] lg:aspect-[16/6]">
             <Image
               src={(heroImage && heroImage.trim()) || fallbackHeroImage}
               alt="NOERDENTAL hero"
@@ -79,17 +79,23 @@ function HomePageContent({
 
       {/* About Section */}
       {(aboutTitle || aboutDescription) && (
-        <section className="bg-white py-12 px-6 md:px-12 rounded-lg">
+        <section className="bg-white py-2 lg:py-12 px-6 md:px-12 rounded-lg">
           <div className="space-y-6">
-            <div className="space-y-4 text-center md:text-left">
-              {aboutTitle && (
-                <h2 className="text-3xl md:text-4xl font-bold">{aboutTitle}</h2>
-              )}
-              {aboutDescription && (
-                <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">
-                  {aboutDescription}
-                </p>
-              )}
+            <div className="space-y-4 md:text-left">
+              <div className="text-center">
+                {aboutTitle && (
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    {aboutTitle}
+                  </h2>
+                )}
+              </div>
+              <div className="text-justice">
+                {aboutDescription && (
+                  <p className="text-gray-600  leading-relaxed text-lg whitespace-pre-line">
+                    {aboutDescription}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -129,7 +135,7 @@ function HomePageContent({
             </p>
             <Link
               href="/about"
-              className="inline-block bg-[#D4B86A] hover:bg-[#C5A959] text-gray-900 px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+              className="inline-block md:w-auto px-8 py-1 border-2 border-black font-medium hover:bg-black hover:text-white transition-colors"
             >
               More
             </Link>
@@ -150,7 +156,7 @@ function HomePageContent({
             </p>
             <Link
               href="/about"
-              className="inline-block bg-[#D4B86A] hover:bg-[#C5A959] text-gray-900 px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+              className="inline-block md:w-auto px-8 py-1 border-2 border-black font-medium hover:bg-black hover:text-white transition-colors"
             >
               More
             </Link>

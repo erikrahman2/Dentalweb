@@ -63,7 +63,7 @@ export default async function ServicesPage() {
         {services.map((service, index) => {
           return (
             <Link key={service.id} href={`/services/${service.id}`}>
-              <article className="group bg-white hover:bg-gray-200 transition-colors cursor-pointer h-full">
+              <article className="group bg-white lg:hover:bg-gray-200 transition-colors cursor-pointer h-full">
                 {/* Content sama seperti sebelumnya */}
                 <div className="flex justify-between items-center p-4 pb-3">
                   <span className="text-xs text-gray-500">***</span>

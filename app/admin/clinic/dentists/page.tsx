@@ -167,7 +167,7 @@ export default function DentistsManagementPage() {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="bg-black text-white px-6 py-3 font-semibold hover:bg-gray-800 transition-colors"
+          className="border-2 border-black hover:text-white px-6 py-3 font-semibold hover:bg-black transition-colors"
         >
           + Add Dentist
         </button>

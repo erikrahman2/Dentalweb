@@ -4,10 +4,18 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 interface Doctor {
+  id?: number;
   name: string;
+  email?: string;
   photo: string;
   joinDate: string;
   daysDone: string;
+  hasPassword?: boolean;
+  user?: {
+    id: string;
+    email: string;
+    isActive: boolean;
+  };
 }
 
 export default function DoctorsAdminPage() {
@@ -15,6 +23,7 @@ export default function DoctorsAdminPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -23,11 +32,12 @@ export default function DoctorsAdminPage() {
   }, []);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      const res = await fetch("/api/clinic-info");
+      const res = await fetch("/api/doctor-profiles");
       if (!res.ok) throw new Error("Failed to fetch");
       const result = await res.json();
-      setData(result.doctors || []);
+      setData(result || []);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -35,25 +45,72 @@ export default function DoctorsAdminPage() {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (doctor: Doctor, index: number) => {
     setSaving(true);
+    setError(null);
+    setSuccess(null);
     try {
-      const res = await fetch("/api/clinic-info");
-      const currentData = await res.json();
-      const updatedData = { ...currentData, doctors: data };
-
-      const saveRes = await fetch("/api/clinic-info", {
+      const res = await fetch("/api/doctor-profiles", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(doctor),
       });
-      if (!saveRes.ok) throw new Error("Failed to save");
-      alert("Saved successfully!");
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to save");
+      }
+
+      const updatedDoctor = await res.json();
+
+      // Update local state
+      setData((prev) =>
+        prev.map((d, i) =>
+          i === index ? { ...updatedDoctor, hasPassword: d.hasPassword } : d
+        )
+      );
+
+      if (doctor.email && !doctor.hasPassword) {
+        setSuccess(
+          `Doctor saved! OTP has been sent to ${doctor.email}. They can now set their password.`
+        );
+      } else {
+        setSuccess("Doctor saved successfully!");
+      }
+
       setEditingIndex(null);
+
+      // Refresh data to get latest info
+      setTimeout(() => fetchData(), 1000);
     } catch (err: any) {
       setError(err.message);
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDelete = async (doctor: Doctor, index: number) => {
+    if (!confirm(`Delete ${doctor.name}?`)) return;
+
+    if (!doctor.id) {
+      // Just remove from local state if not saved yet
+      setData((prev) => prev.filter((_, i) => i !== index));
+      setEditingIndex(null);
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/doctor-profiles?id=${doctor.id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) throw new Error("Failed to delete");
+
+      setData((prev) => prev.filter((_, i) => i !== index));
+      setSuccess("Doctor deleted successfully!");
+      setEditingIndex(null);
+    } catch (err: any) {
+      setError(err.message);
     }
   };
 
@@ -69,17 +126,13 @@ export default function DoctorsAdminPage() {
       ...prev,
       {
         name: "",
+        email: "",
         photo: "",
         joinDate: "",
         daysDone: "",
       },
     ]);
     setEditingIndex(newIndex);
-  };
-
-  const removeFromArray = (index: number) => {
-    setData((prev) => prev.filter((_, i) => i !== index));
-    setEditingIndex(null);
   };
 
   const handleFileUpload = async (file: File, index: number) => {
@@ -126,24 +179,26 @@ export default function DoctorsAdminPage() {
         <div>
           <Link
             href="/admin/clinic"
-            className="text-blue-600 hover:underline mb-1 inline-block text-sm"
+            className="font-black hover:underline mb-1 inline-block text-m"
           >
-            ← Back to Clinic Overview
+            Back←
           </Link>
-          <h1 className="text-3xl font-bold">Our Dentists</h1>
+          <h1 className="text-3xl font-bold">Dentist Management</h1>
+          <p className="text-sm text-gray-600 mt-1">
+            Add email to create dentist login accounts
+          </p>
         </div>
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="px-3 py-2 bg-black text-white hover:bg-gray-800 disabled:opacity-50 text-sm"
-        >
-          {saving ? "Saving..." : "Save Changes"}
-        </button>
       </div>
 
       {error && (
-        <div className="text-red-600 bg-red-50 p-2 border border-red-600 mb-2 text-sm">
+        <div className="text-red-600 bg-red-50 p-3 border border-red-600 mb-2 text-sm">
           {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="text-green-600 bg-green-50 p-3 border border-green-600 mb-2 text-sm">
+          {success}
         </div>
       )}
 
@@ -164,19 +219,46 @@ export default function DoctorsAdminPage() {
                         />
                       )}
                     </div>
-                    <div className="flex-1">
-                      <label className="block text-xs font-medium mb-1">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        value={doctor.name}
-                        onChange={(e) =>
-                          updateArrayItem(index, "name", e.target.value)
-                        }
-                        className="w-full p-2 border border-gray-300 text-sm"
-                        placeholder="Doctor name"
-                      />
+                    <div className="flex-1 space-y-2">
+                      <div>
+                        <label className="block text-xs font-medium mb-1">
+                          Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={doctor.name}
+                          onChange={(e) =>
+                            updateArrayItem(index, "name", e.target.value)
+                          }
+                          className="w-full p-2 border border-gray-300 text-sm"
+                          placeholder="Dentist name"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium mb-1">
+                          Email (for login access)
+                          {doctor.hasPassword && (
+                            <span className="ml-2 text-green-600">
+                              ✓ Account activated
+                            </span>
+                          )}
+                        </label>
+                        <input
+                          type="email"
+                          value={doctor.email || ""}
+                          onChange={(e) =>
+                            updateArrayItem(index, "email", e.target.value)
+                          }
+                          className="w-full p-2 border border-gray-300 text-sm"
+                          placeholder="dentist@example.com"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          {!doctor.hasPassword
+                            ? "OTP will be sent to this email for password setup"
+                            : "Login account is active"}
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div>
@@ -225,19 +307,20 @@ export default function DoctorsAdminPage() {
                   </div>
                   <div className="flex gap-2 pt-1">
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setEditingIndex(null);
-                      }}
-                      className="px-3 py-1 bg-gray-500 text-white text-sm hover:bg-gray-600"
+                      onClick={() => handleSave(doctor, index)}
+                      disabled={saving || !doctor.name}
+                      className="px-3 py-1 bg-green-600 text-white text-sm hover:bg-green-700 disabled:opacity-50"
                     >
-                      Done
+                      {saving ? "Saving..." : "Save"}
                     </button>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeFromArray(index);
-                      }}
+                      onClick={() => setEditingIndex(null)}
+                      className="px-3 py-1 bg-gray-500 text-white text-sm hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => handleDelete(doctor, index)}
                       className="px-3 py-1 bg-red-500 text-white text-sm hover:bg-red-600"
                     >
                       Delete
@@ -269,18 +352,29 @@ export default function DoctorsAdminPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-xl font-bold mb-2">
-                      {doctor.name || "Unnamed Doctor"}
+                      {doctor.name || "Unnamed Dentist"}
                     </h3>
+                    {doctor.email && (
+                      <p className="text-sm text-gray-600 mb-1">
+                        📧 {doctor.email}{" "}
+                        {doctor.hasPassword && (
+                          <span className="text-green-600 font-medium">
+                            (Active)
+                          </span>
+                        )}
+                        {!doctor.hasPassword && (
+                          <span className="text-orange-600 font-medium">
+                            (Pending setup)
+                          </span>
+                        )}
+                      </p>
+                    )}
                     <p className="text-gray-600 text-sm">
                       Join: {doctor.joinDate || "-"} | Days Done:{" "}
                       {doctor.daysDone || "-"}
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <div className="text-sm text-gray-500 mb-1">Price</div>
-                    <div className="text-xl font-bold">
-                      Rp {doctor.daysDone || "0"}
-                    </div>
                     <div className="flex gap-3 mt-2 justify-end">
                       <button
                         onClick={(e) => {
@@ -290,15 +384,6 @@ export default function DoctorsAdminPage() {
                         className="text-gray-600 hover:text-gray-900 text-sm font-medium"
                       >
                         EDIT →
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeFromArray(index);
-                        }}
-                        className="text-gray-600 hover:text-gray-900 text-sm font-medium"
-                      >
-                        DELETE
                       </button>
                     </div>
                   </div>
@@ -314,7 +399,7 @@ export default function DoctorsAdminPage() {
           onClick={addToArray}
           className="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 text-sm font-semibold"
         >
-          + Add Doctor
+          + Add Dentist
         </button>
       </div>
     </div>

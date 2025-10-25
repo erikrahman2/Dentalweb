@@ -69,16 +69,16 @@ export default function AboutAdminPage() {
         <div>
           <Link
             href="/admin/clinic"
-            className="text-blue-600 hover:underline mb-2 inline-block"
+            className="font-black hover:underline mb-1 inline-block text-m"
           >
-            ← Back to Clinic Overview
+            Back←
           </Link>
           <h1 className="text-2xl font-bold">About Us Settings</h1>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 disabled:opacity-50"
+          className="w-full md:w-auto px-6 py-2 border-2 border-black font-medium hover:bg-black hover:text-white transition-colors"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

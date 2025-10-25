@@ -19,10 +19,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down & past threshold
         setIsVisible(false);
       } else {
-        // Scrolling up
         setIsVisible(true);
       }
 
@@ -36,7 +34,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     };
   }, [lastScrollY]);
 
-  // Toggle between logo and text every 25 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setShowLogo((prev) => !prev);
@@ -45,8 +42,19 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     return () => clearInterval(interval);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [mobileOpen]);
+
   if (isAdmin) {
-    // Do not render public navigation/footer on admin pages
     return <>{children}</>;
   }
 
@@ -58,8 +66,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         }`}
       >
         <div className="container mx-auto px-4 py-4">
-          {/* Top bar */}
-          <div className="flex items-center justify-between border-b border-gray-600 pb-4">
+          <div
+            className={`flex items-center justify-between pb-4 ${
+              !mobileOpen ? "border-b border-gray-600" : ""
+            }`}
+          >
             <div className="text-2xl lg:text-sm font-medium text-gray-800 hover:text-gray-400 transition-opacity duration-500">
               <Link href="/" className="flex items-center">
                 {showLogo ? (
@@ -118,78 +129,130 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
             {/* Mobile hamburger */}
             <button
-              className="sm:hidden p-2 rounded-md text-gray-700"
+              className="sm:hidden p-2 rounded-md text-gray-700 relative w-8 h-8 flex items-center justify-center"
               aria-label="Toggle navigation"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
+              <div className="w-6 h-3 relative flex flex-col justify-between">
+                <span
+                  className={`block h-0.5 bg-gray-700 transition-all duration-300 ease-in-out ${
+                    mobileOpen
+                      ? "rotate-45 translate-y-[7px] w-6"
+                      : "rotate-0 translate-y-0 w-6"
+                  }`}
                 />
-              </svg>
+                <span
+                  className={`block h-0.5 bg-gray-700 transition-all duration-300 ease-in-out ${
+                    mobileOpen
+                      ? "-rotate-45 -translate-y-[7px] w-6"
+                      : "rotate-0 translate-y-0 w-5"
+                  }`}
+                />
+              </div>
             </button>
           </div>
-
-          {/* Mobile dropdown */}
-          {mobileOpen && (
-            <div className="sm:hidden mt-3 space-y-2">
-              <Link
-                href="/services"
-                onClick={() => setMobileOpen(false)}
-                className="block text-sm text-gray-700 px-2 py-2 rounded hover:bg-gray-100"
-              >
-                Services
-              </Link>
-              <Link
-                href="/about"
-                onClick={() => setMobileOpen(false)}
-                className="block text-sm text-gray-700 px-2 py-2 rounded hover:bg-gray-100"
-              >
-                About Us
-              </Link>
-              <Link
-                href="/faq"
-                onClick={() => setMobileOpen(false)}
-                className="block text-sm text-gray-700 px-2 py-2 rounded hover:bg-gray-100"
-              >
-                FAQ
-              </Link>
-              <Link
-                href="/gallery"
-                onClick={() => setMobileOpen(false)}
-                className="block text-sm text-gray-700 px-2 py-2 rounded hover:bg-gray-100"
-              >
-                Pict
-              </Link>
-              <Link
-                href="/contact"
-                onClick={() => setMobileOpen(false)}
-                className="block text-sm text-gray-700 px-2 py-2 rounded hover:bg-gray-100"
-              >
-                Contact
-              </Link>
-              <Link
-                href="/admin"
-                onClick={() => setMobileOpen(false)}
-                className="block text-sm text-gray-700 px-2 py-2 rounded hover:bg-gray-100"
-              >
-                Admin
-              </Link>
-            </div>
-          )}
 
           <DynamicTitle />
         </div>
       </header>
+
+      {/* Mobile full-screen menu */}
+      {mobileOpen && (
+        <div className="sm:hidden fixed inset-0 bg-gray-200 z-50 flex flex-col overflow-y-auto animate-fadeIn">
+          {/* Header with close button */}
+          <div className="flex items-center justify-between px-6 py-4 bg-gray-200">
+            <div className="text-sm font-medium text-gray-800">
+              <Image
+                src="/assets/logounit_2.png"
+                alt="Noerdental Clinic Logo"
+                width={120}
+                height={40}
+                className="h-8 w-auto"
+              />
+            </div>
+            <button
+              className="relative w-8 h-8 flex items-center justify-center"
+              onClick={() => setMobileOpen(false)}
+            >
+              <div className="w-6 h-4 relative flex flex-col justify-between">
+                <span className="block h-0.5 bg-gray-700 rotate-45 translate-y-[7px] w-6" />
+                <span className="block h-0.5 bg-gray-700 -rotate-45 -translate-y-[7px] w-6" />
+              </div>
+            </button>
+          </div>
+
+          {/* Menu items */}
+          <nav className="flex-1 px-6 pt-12 pb-8 bg-gray-200">
+            <div className="space-y-6">
+              <Link
+                href="/services"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-gray-600"
+              >
+                <span className="text-xl font-light text-gray-900">
+                  Services
+                </span>
+                <span className="text-xs text-gray-700">01</span>
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-gray-600"
+              >
+                <span className="text-xl font-light text-gray-900">
+                  About Us
+                </span>
+                <span className="text-xs text-gray-700">02</span>
+              </Link>
+              <Link
+                href="/faq"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-gray-600"
+              >
+                <span className="text-xl font-light text-gray-900">FAQ</span>
+                <span className="text-xs text-gray-700">03</span>
+              </Link>
+              <Link
+                href="/gallery"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-gray-600"
+              >
+                <span className="text-xl font-light text-gray-900">Pict</span>
+                <span className="text-xs text-gray-700">04</span>
+              </Link>
+              <Link
+                href="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-gray-600"
+              >
+                <span className="text-xl font-light text-gray-900">
+                  Contact
+                </span>
+                <span className="text-xs text-gray-700">05</span>
+              </Link>
+              <Link
+                href="/admin"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between py-2 border-b border-gray-600"
+              >
+                <span className="text-xl font-light text-gray-900">Admin</span>
+                <span className="text-xs text-gray-700">06</span>
+              </Link>
+            </div>
+
+            {/* Social links */}
+            <div className="mt-12 space-y-3">
+              <a
+                href="#"
+                className="bottom-0 block text-sm text-gray-600 hover:text-gray-800"
+              >
+                - Derik
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
 
       {/* Spacer to prevent content from going under fixed header */}
       <div className="h-[120px]"></div>
@@ -197,19 +260,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <main className="container mx-auto px-4 py-8">{children}</main>
 
       <footer className="bg-black text-white pb-12">
-        {/* Newsletter Section */}
-        {/* <div className=" py-6 mb-12">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-center gap-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
-              <span className="text-sm font-medium">NOERDENTAL+++</span>
-              <span className="text-sm font-medium">NOERDENTAL+++</span>
-              <span className="text-sm font-medium">NOERDENTAL+++</span>
-              <span className="text-sm font-medium">NOERDENTAL+++</span>
-              <span className="text-sm font-medium">NOERDENTAL+++</span>
-            </div>
-          </div>
-        </div> */}
-
         <div className="container mx-auto px-4 pt-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
             {/* Left Column - Newsletter */}

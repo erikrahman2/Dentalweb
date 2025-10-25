@@ -3,7 +3,7 @@
     "heroTitle": "\"Inspiring smiles in every encounter.\"",
     "heroSubtitle": "Open: sat, 3pm - 8pm   ||   sun, 9am - 8pm",
     "heroDescription": "Kami percaya, setiap senyum berharga. Karena itu, kami menghadirkan pengalaman perawatan gigi yang nyaman, tenang, dan penuh perhatian. Dengan tim dokter berpengalaman serta teknologi modern, kami siap membantu Anda merawat kesehatan gigi sekaligus mempercantik senyum Anda.\n                               \nTemukan rasa nyaman baru dalam setiap kunjungan, dan biarkan kami membantu Anda tampil lebih percaya diri.",
-    "heroImage": "/api/images/service-1760981964646.jpg",
+    "heroImage": "/api/images/service-1761268023779.jpg",
     "aboutTitle": "Kenapa Harus Noerdental?",
     "aboutDescription": "Noer Dental adalah klinik gigi modern yang mengutamakan kenyamanan, kepercayaan, dan hasil perawatan terbaik bagi setiap pasien. Dengan dukungan dokter gigi berpengalaman, teknologi perawatan terkini, dan suasana klinik yang bersih serta tenang, kami berkomitmen memberikan pengalaman perawatan gigi yang menyenangkan tanpa rasa takut.\nKami percaya bahwa senyum indah bukan hanya tentang estetika, tapi juga tentang rasa percaya diri dan kesehatan yang menyeluruh. Dari pemeriksaan rutin hingga perawatan ortodontik dan estetika gigi, Noer Dental siap membantu Anda mendapatkan senyum terbaik Anda.\n"
   },
@@ -36,7 +36,12 @@
   "about": {
     "title": "Tentang Noerdental",
     "description": "Noerdental didirikan dengan komitmen untuk memberikan perawatan gigi berkualitas tinggi.",
-    "values": ["Profesional", "Terpercaya", "Modern", "Ramah"]
+    "values": [
+      "Profesional",
+      "Terpercaya",
+      "Modern",
+      "Ramah"
+    ]
   },
   "doctors": [
     {

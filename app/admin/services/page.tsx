@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Service {
   id: string;
@@ -230,14 +231,20 @@ export default function ServicesAdminPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-8 px-4 sm:px-6">
       {/* Header */}
+      <Link
+        href="/admin/clinic"
+        className="font-black hover:underline mb-1 inline-block text-m"
+      >
+        Back←
+      </Link>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold">Services Management</h1>
-          <p className="text-gray-600">Manage your dental services</p>
+          <p className="text-gray-800">Manage your dental services</p>
         </div>
         <button
           onClick={() => setIsAddingNew(true)}
-          className="w-full md:w-auto px-6 py-2 bg-black text-white font-medium hover:bg-gray-800 transition-colors"
+          className="w-full md:w-auto px-6 py-2 border-2 border-black font-medium hover:bg-black hover:text-white transition-colors"
         >
           + Add New Service
         </button>
