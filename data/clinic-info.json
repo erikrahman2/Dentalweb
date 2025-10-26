@@ -70,5 +70,12 @@
       "after": "/uploads/service-1758728297205.jpg",
       "label": "Whitening"
     }
+  ],
+  "contact": [
+    {
+      "address": "Jl. Contoh No. 123, Painan, Pesisir Selatan",
+      "phone": "0812-3456-7890",
+      "email": "info@noerdental.com"
+    }
   ]
 }

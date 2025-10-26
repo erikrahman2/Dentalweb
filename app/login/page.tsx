@@ -1,5 +1,6 @@
 "use client";
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -10,6 +11,9 @@ export default function LoginPage() {
   const router = useRouter();
   const sp = useSearchParams();
   const next = sp.get("next") || "/admin";
+  const otpLink = email
+    ? `/login/otp?email=${encodeURIComponent(email)}`
+    : "/login/otp";
 
   return (
     <div className="max-w-sm mx-auto">
@@ -60,6 +64,14 @@ export default function LoginPage() {
           {isPending ? "Memproses..." : "Login"}
         </button>
       </form>
+      <div className="mt-4 text-sm text-center">
+        <Link
+          href={otpLink}
+          className="text-blue-600 hover:underline"
+        >
+          You got OTP for your email?
+        </Link>
+      </div>
     </div>
   );
 }

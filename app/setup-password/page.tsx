@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SetupPasswordPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: "",
-    otp: "",
+  const searchParams = useSearchParams();
+  const [formData, setFormData] = useState(() => ({
+    email: searchParams.get("email") || "",
+    otp: searchParams.get("otp") || "",
     password: "",
     confirmPassword: "",
-  });
+  }));
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 

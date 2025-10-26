@@ -24,22 +24,22 @@ export default async function ServicesPage() {
       <section className="mb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Image */}
-          <div className="order-1 overflow-hidden rounded-l">
+          <div className="order-1">
             <img
               src="/assets/layananpict.jpg"
               alt="Dental service"
-              className="w-full h-auto object-cover rounded-lg lg:h-auto max-h-[230px] lg:max-h-[25rem] object-center"
+              className="w-full h-64 object-cover lg:h-auto  lg:max-h-[25rem] lg:ml-[-7rem] object-center"
             />
           </div>
 
           {/* Text Content */}
-          <div className="order-2 space-y-6">
-            <div className="inline-block bg-[#e1dcc7] px-6 py-3 rounded-s">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+          <div className="order-2 space-y-3">
+            <div className="inline-block bg-[#8E1616] px-6 py-3">
+              <h2 className="text-4xl md:text-5xl text-white lg:text-6xl font-medium">
                 Our Services
               </h2>
             </div>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+            <p className="text-[1.3rem] md:text-xl text-black leading-relaxed pl-6">
               Kami menyediakan layanan perawatan gigi—dari pencegahan hingga
               perbaikan baik dari segi kesehatan maupun estetika untuk memenuhi
               kebutuhan setiap pasien.

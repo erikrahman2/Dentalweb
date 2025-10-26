@@ -107,7 +107,7 @@ function HomePageContent({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Dental Lens Image */}
           <div className="relative w-full h-[280px] md:h-[320px]">
-            <div className="absolute top-8 left-8 right-16 bottom-16 bg-[#D4B86A] rounded-[60% 40% 70% 30% / 50% 60% 40% 50%]"></div>
+            <div className="absolute top-8 left-8 right-16 bottom-16 bg-[#E8C999] rounded-[60% 40% 70% 30% / 50% 60% 40% 50%]"></div>
             <div className="relative w-full h-full flex items-center justify-start pl-4">
               <div className="relative w-[92%] h-[180%]">
                 <Image
@@ -164,7 +164,7 @@ function HomePageContent({
 
           {/* Dental Chair Image */}
           <div className="relative w-full h-[280px] md:h-[320px] md:order-2 order-1">
-            <div className="absolute top-16 left-16 right-8 bottom-16 bg-[#2D7A7A] rounded-[40% 60% 30% 70% / 60% 50% 50% 40%]"></div>
+            <div className="absolute top-16 left-16 right-8 bottom-16 bg-[#8E1616] rounded-[40% 60% 30% 70% / 60% 50% 50% 40%]"></div>
             <div className="relative w-full h-full flex items-center justify-end pr-4">
               <div className="relative w-[90%] h-[130%]">
                 <Image
@@ -202,7 +202,7 @@ function HomePageContent({
                   <Link
                     key={service.id}
                     href={`/services/${service.id}`}
-                    className="group flex-shrink-0 w-[280px] md:w-[320px] bg-white border-r border-gray-200 first:border-l"
+                    className="group flex-shrink-0 w-[280px] md:w-[320px] bg-white border-r border-gray-300 first:border-l"
                   >
                     <div className="p-6">
                       <div className="relative aspect-square overflow-hidden bg-gray-200">
