@@ -199,10 +199,9 @@ function HomePageContent({
             <div className="flex">
               {services.length > 0 ? (
                 services.map((service) => (
-                  <Link
+                  <div
                     key={service.id}
-                    href={`/services/${service.id}`}
-                    className="group flex-shrink-0 w-[280px] md:w-[320px] bg-white border-r border-gray-300 first:border-l"
+                    className="flex-shrink-0 w-[280px] md:w-[320px] bg-white border-r border-gray-300 first:border-l"
                   >
                     <div className="p-6">
                       <div className="relative aspect-square overflow-hidden bg-gray-200">
@@ -215,34 +214,27 @@ function HomePageContent({
                         ) : (
                           <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400" />
                         )}
-                        <div className="absolute bottom-6 left-6 right-6 text-white">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                        <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
                           <h3 className="text-xl font-bold leading-tight drop-shadow-lg">
                             {service.name}
                           </h3>
+                          {service.category && (
+                            <p className="text-sm font-medium opacity-90 drop-shadow-md">
+                              {service.category}
+                            </p>
+                          )}
+                          <p className="text-lg font-bold drop-shadow-md">
+                            Rp{" "}
+                            {(typeof service.price === "number"
+                              ? service.price
+                              : service.price.toNumber()
+                            ).toLocaleString("id-ID")}
+                          </p>
                         </div>
                       </div>
                     </div>
-
-                    <div className="px-6 pb-6 space-y-2 bg-white group-hover:bg-gray-50 transition-colors duration-300">
-                      {service.highlightDescription && (
-                        <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
-                          {service.highlightDescription}
-                        </p>
-                      )}
-                      <div className="flex justify-between items-center pt-2">
-                        <span className="text-lg font-bold text-gray-900">
-                          Rp{" "}
-                          {(typeof service.price === "number"
-                            ? service.price
-                            : service.price.toNumber()
-                          ).toLocaleString("id-ID")}
-                        </span>
-                        <span className="text-xs font-medium text-gray-500 group-hover:text-gray-900 transition-colors duration-300">
-                          Selengkapnya
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
+                  </div>
                 ))
               ) : (
                 <div className="text-gray-500 text-sm p-8">

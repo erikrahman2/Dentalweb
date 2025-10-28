@@ -8,7 +8,6 @@ interface Service {
   id: string;
   name: string;
   description: string | null;
-  highlightDescription: string | null;
   price: number;
   category: string | null;
   imageUrl: string | null;
@@ -22,7 +21,6 @@ export default function ServicesAdminPage() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    highlightDescription: "",
     price: 0,
     category: "",
     imageUrl: "",
@@ -58,9 +56,7 @@ export default function ServicesAdminPage() {
       id: String(service.id),
       name: service.name ? String(service.name) : "",
       description: service.description ? String(service.description) : null,
-      highlightDescription: service.highlightDescription
-        ? String(service.highlightDescription)
-        : null,
+
       price:
         typeof service.price === "number"
           ? service.price
@@ -127,7 +123,6 @@ export default function ServicesAdminPage() {
       const payload = {
         name: formData.name.trim(),
         description: formData.description.trim() || null,
-        highlightDescription: formData.highlightDescription.trim() || null,
         category: formData.category.trim() || null,
         price: Number(formData.price),
         imageUrl: formData.imageUrl || null,
@@ -147,7 +142,10 @@ export default function ServicesAdminPage() {
         });
         const body = await res.json().catch(() => ({}));
         if (!res.ok) throw new Error(body?.error || "Failed to update service");
+
+        // Close form after successful update
         setEditingService(null);
+        setIsAddingNew(false);
       } else {
         const res = await fetch("/api/services", {
           method: "POST",
@@ -161,10 +159,10 @@ export default function ServicesAdminPage() {
 
       await fetchServices();
 
+      // Reset form data
       setFormData({
         name: "",
         description: "",
-        highlightDescription: "",
         price: 0,
         category: "",
         imageUrl: "",
@@ -182,7 +180,6 @@ export default function ServicesAdminPage() {
     setFormData({
       name: service.name,
       description: service.description ?? "",
-      highlightDescription: service.highlightDescription ?? "",
       price: service.price,
       category: service.category ?? "",
       imageUrl: service.imageUrl ?? "",
@@ -219,7 +216,6 @@ export default function ServicesAdminPage() {
     setFormData({
       name: "",
       description: "",
-      highlightDescription: "",
       price: 0,
       category: "",
       imageUrl: "",
@@ -391,20 +387,6 @@ export default function ServicesAdminPage() {
 
             <div>
               <label className="block text-sm font-medium mb-2">
-                Highlight Description
-              </label>
-              <textarea
-                name="highlightDescription"
-                value={formData.highlightDescription}
-                onChange={handleInputChange}
-                rows={4}
-                className="w-full p-3 border border-gray-300 focus:outline-none focus:border-black"
-                placeholder="Brief engaging description for cards"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">
                 Full Description
               </label>
               <textarea
@@ -473,17 +455,15 @@ export default function ServicesAdminPage() {
                 )}
               </div>
 
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-gray-900 mb-1">{service.name}</h3>
-                <p className="text-sm text-gray-600 line-clamp-2">
-                  {service.highlightDescription ||
-                    "Professional dental service"}
-                </p>
+              {/* Name */}
+              <div className="flex-shrink-0 w-8 text-center">
+                <span className="text-xl font-medium text-black flex justify-between">
+                  {service.name}
+                </span>
               </div>
 
               {/* Price and Actions */}
-              <div className="flex flex-col items-end justify-between gap-2 flex-shrink-0">
+              <div className="flex flex-col items-end justify-between gap-2 flex-shrink-0 ml-auto">
                 <div className="text-right">
                   <div className="text-xs text-gray-500 mb-1">Price</div>
                   <div className="text-sm font-bold text-gray-900">

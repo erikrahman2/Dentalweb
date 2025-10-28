@@ -102,8 +102,14 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Kirim OTP via email
-    await sendOTPEmail(email, name, otp);
+    const emailSent = await sendOTPEmail(email, name, otp);
+    if (!emailSent) {
+      await prisma.user.delete({ where: { id: dentist.id } });
+      return NextResponse.json(
+        { error: "Failed to send OTP email" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       {

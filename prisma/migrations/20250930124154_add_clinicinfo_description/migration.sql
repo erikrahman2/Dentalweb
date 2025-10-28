@@ -10,7 +10,6 @@ ALTER TABLE `visit` DROP FOREIGN KEY `Visit_serviceId_fkey`;
 
 -- AlterTable
 ALTER TABLE `service` ADD COLUMN `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    ADD COLUMN `highlightDescription` VARCHAR(191) NULL,
     ADD COLUMN `imageUrl` VARCHAR(191) NULL,
     MODIFY `price` DECIMAL(65, 30) NOT NULL;
 

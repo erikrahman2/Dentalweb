@@ -38,7 +38,13 @@ export async function POST(
     });
 
     // Kirim email
-    await sendOTPEmail(dentist.email, dentist.name, otp);
+    const emailSent = await sendOTPEmail(dentist.email, dentist.name, otp);
+    if (!emailSent) {
+      return NextResponse.json(
+        { error: "Failed to send OTP email" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       message: "OTP resent successfully",

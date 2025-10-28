@@ -33,18 +33,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log("Received payload:", body); // Debug log
 
-    const {
-      name,
-      description,
-      highlightDescription,
-      price,
-      category,
-      imageUrl,
-      isActive,
-    } = body as {
+    const { name, description, price, category, imageUrl, isActive } = body as {
       name?: string;
       description?: string | null;
-      highlightDescription?: string | null;
       price?: number | string;
       category?: string | null;
       imageUrl?: string | null;
@@ -60,7 +51,6 @@ export async function POST(request: NextRequest) {
       normalizedName,
       parsedPrice,
       description,
-      highlightDescription,
       category,
       imageUrl,
       isActive,
@@ -86,11 +76,7 @@ export async function POST(request: NextRequest) {
           typeof description === "string" && description.trim() !== ""
             ? description.trim()
             : null,
-        highlightDescription:
-          typeof highlightDescription === "string" &&
-          highlightDescription.trim() !== ""
-            ? highlightDescription.trim()
-            : null,
+
         category:
           typeof category === "string" && category.trim() !== ""
             ? category.trim()
@@ -146,25 +132,16 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const {
-      id,
-      name,
-      description,
-      highlightDescription,
-      price,
-      category,
-      imageUrl,
-      isActive,
-    } = body as {
-      id?: string;
-      name?: string;
-      description?: string | null;
-      highlightDescription?: string | null;
-      price?: number | string;
-      category?: string | null;
-      imageUrl?: string | null;
-      isActive?: boolean;
-    };
+    const { id, name, description, price, category, imageUrl, isActive } =
+      body as {
+        id?: string;
+        name?: string;
+        description?: string | null;
+        price?: number | string;
+        category?: string | null;
+        imageUrl?: string | null;
+        isActive?: boolean;
+      };
 
     if (!id) {
       return NextResponse.json({ error: "'id' is required" }, { status: 400 });
@@ -175,7 +152,6 @@ export async function PUT(request: NextRequest) {
       data: {
         ...(name !== undefined ? { name } : {}),
         ...(description !== undefined ? { description } : {}),
-        ...(highlightDescription !== undefined ? { highlightDescription } : {}),
         ...(category !== undefined ? { category } : {}),
         ...(imageUrl !== undefined ? { imageUrl } : {}),
         ...(isActive !== undefined ? { isActive } : {}),
