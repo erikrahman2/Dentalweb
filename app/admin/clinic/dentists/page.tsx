@@ -21,6 +21,8 @@ export default function DentistsManagementPage() {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [otpData, setOtpData] = useState({ otp: "", email: "" });
 
   useEffect(() => {
     fetchDentists();
@@ -51,6 +53,8 @@ export default function DentistsManagementPage() {
     setError("");
 
     try {
+      console.log("1. Sending request to add dentist:", formData);
+
       const res = await fetch("/api/dentists", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -58,17 +62,28 @@ export default function DentistsManagementPage() {
       });
 
       const data = await res.json();
+      console.log("2. Response received:", data);
 
       if (!res.ok) {
         setError(data.error || "Failed to add dentist");
         return;
       }
 
+      // ✅ FIXED: Show OTP in modal
+      if (data.otp) {
+        console.log("3. ✅ OTP received:", data.otp);
+        setOtpData({ otp: data.otp, email: formData.email });
+        setShowOtpModal(true);
+      } else {
+        console.warn("⚠️ OTP not in response, check API route");
+        alert("Dentist added successfully! Check server console for OTP.");
+      }
+
       setShowAddModal(false);
       setFormData({ name: "", email: "" });
       fetchDentists();
-      alert("Dentist added successfully! OTP sent to email.");
     } catch (error) {
+      console.error("❌ Error adding dentist:", error);
       setError("Failed to add dentist");
     } finally {
       setSubmitting(false);
@@ -139,13 +154,24 @@ export default function DentistsManagementPage() {
       const data = await res.json();
 
       if (res.ok) {
-        alert("OTP resent successfully!");
+        // ✅ Show OTP in modal instead of alert
+        if (data.otp) {
+          setOtpData({ otp: data.otp, email });
+          setShowOtpModal(true);
+        } else {
+          alert("OTP resent successfully! Check server console.");
+        }
       } else {
         alert(data.error || "Failed to resend OTP");
       }
     } catch (error) {
       alert("Failed to resend OTP");
     }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert("OTP copied to clipboard!");
   };
 
   if (loading) {
@@ -269,7 +295,7 @@ export default function DentistsManagementPage() {
         </table>
       </div>
 
-      {/* Add Modal */}
+      {/* Add Dentist Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 max-w-md w-full mx-4 border-2 border-black">
@@ -336,6 +362,84 @@ export default function DentistsManagementPage() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ NEW: OTP Display Modal */}
+      {showOtpModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 max-w-md w-full mx-4 border-2 border-black">
+            <div className="text-center mb-6">
+              <div className="inline-block p-3 bg-green-100 rounded-full mb-4">
+                <svg
+                  className="w-12 h-12 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-black mb-2">
+                ✅ Dentist Added Successfully!
+              </h2>
+              <p className="text-gray-600">
+                Share this OTP with the dentist to setup their password
+              </p>
+            </div>
+
+            <div className="bg-yellow-50 border-2 border-yellow-400 p-6 mb-6">
+              <p className="text-sm text-gray-700 mb-2">Email:</p>
+              <p className="font-semibold text-black mb-4">{otpData.email}</p>
+
+              <p className="text-sm text-gray-700 mb-2">OTP Code:</p>
+              <div className="flex items-center gap-2">
+                <p className="text-3xl font-bold text-black bg-white px-4 py-3 border-2 border-black flex-1 text-center tracking-wider">
+                  {otpData.otp}
+                </p>
+                <button
+                  onClick={() => copyToClipboard(otpData.otp)}
+                  className="border-2 border-black px-4 py-3 hover:bg-black hover:text-white transition-colors"
+                  title="Copy OTP"
+                >
+                  📋
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-600 mt-3">
+                ⏰ Valid for 24 hours
+              </p>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 p-4 mb-6">
+              <p className="text-sm text-blue-800">
+                <strong>Instructions:</strong>
+                <br />
+                1. Send this OTP to the dentist
+                <br />
+                2. Ask them to visit <strong>/setup-password</strong>
+                <br />
+                3. They will enter their email and this OTP
+                <br />
+                4. Then create their password
+              </p>
+            </div>
+
+            <button
+              onClick={() => {
+                setShowOtpModal(false);
+                setOtpData({ otp: "", email: "" });
+              }}
+              className="w-full bg-black text-white px-6 py-3 font-semibold hover:bg-gray-800 transition-colors"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

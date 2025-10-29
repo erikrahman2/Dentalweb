@@ -81,7 +81,7 @@ export default function ServicesClient({ services }: ServicesClientProps) {
               <img
                 src="/assets/layananpict.jpg"
                 alt="Dental service"
-                className="w-full h-64 object-cover lg:h-auto lg:max-h-[25rem] lg:ml-[-7rem] object-center rounded-lg"
+                className="w-full h-64 object-cover lg:h-auto lg:max-h-[25rem] lg:ml-[-9rem] object-center"
               />
             </div>
 

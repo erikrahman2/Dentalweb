@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("admin@noerdental.com");
-  const [password, setPassword] = useState("admin123");
+  const [password, setPassword] = useState("admin12345");
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -65,10 +65,7 @@ export default function LoginPage() {
         </button>
       </form>
       <div className="mt-4 text-sm text-center">
-        <Link
-          href={otpLink}
-          className="text-blue-600 hover:underline"
-        >
+        <Link href={otpLink} className="text-blue-600 hover:underline">
           You got OTP for your email?
         </Link>
       </div>

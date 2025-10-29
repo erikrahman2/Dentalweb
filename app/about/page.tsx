@@ -51,15 +51,54 @@ export default async function AboutPage() {
 
   return (
     <section className="prose max-w-none">
-      <h1>About Us</h1>
-      {about.description && <p>{about.description}</p>}
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl md:mb-8 font-medium text-gray-800 px-4 md:px-0">
+        Mengenal Klinik NoerDental
+      </h1>
+
+      {/* Double column for desktop, single column for mobile with background */}
+      <div className="grid md:grid-cols-2 gap-0 items-stretch my-6 md:my-8 lg:my-12 relative">
+        {/* Background Pattern - Absolute positioned behind */}
+        <div className="absolute left-[-1rem] lg:left-[-7rem] top-0 w-[40%] md:w-[45%] lg:w-[40%] h-full z-0">
+          <Image
+            src="/assets/aboutusp.png"
+            alt="Background Pattern"
+            fill
+            className="object-cover opacity-30 md:opacity-60"
+            priority
+          />
+        </div>
+
+        {/* Main Image Container */}
+        <div className="relative z-10 flex items-center justify-center md:justify-start px-4 sm:px-6 md:px-8 py-6 md:py-0">
+          <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-md aspect-[6/4] sm:aspect-[5/6]">
+            <Image
+              src="/assets/asset32.jpg"
+              alt="Klinik NoerDental"
+              fill
+              className="object-cover shadow-lg md:shadow-2xl rounded-sm md:rounded-none"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* Description - Right Side */}
+        <div className="relative p-6 sm:p-8 md:p-10 lg:p-16 z-20 md:z-0 flex items-center">
+          <div className="max-w-xl w-full">
+            {about.description && (
+              <p className="text-gray-700 text-l font-medium sm:text-base md:text-lg leading-relaxed">
+                {about.description}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
 
       {/* Visi & Misi Section */}
-      <div className="not-prose my-16 mx-[-1.24rem] lg:mx-[-6.8rem]">
+      <div className="not-prose my-5 lg:my-16 mx-[-1.24rem] lg:mx-[-6.8rem]">
         <div className="grid md:grid-cols-2 gap-0 overflow-hidden ">
           {/* Visi Section */}
           <div className=" p-12 transition-all duration-300 hover:bg-[#8E1616] hover:shadow-2xl group">
-            <h2 className="text-3xl md:text-5xl font-medium text-gray-800 group-hover:text-white mb-8 group-hover:scale-105 transition-all duration-300">
+            <h2 className="text-3xl md:text-5xl font-medium text-gray-800 group-hover:text-white mb-4 group-hover:scale-105 transition-all duration-300">
               VISI
             </h2>
             <p className="text-gray-700 group-hover:text-white leading-relaxed text-base md:text-lg transition-all duration-300">
@@ -76,7 +115,7 @@ export default async function AboutPage() {
 
           {/* Misi Section */}
           <div className="p-12 transition-all duration-300 hover:bg-[#8E1616] hover:shadow-2xl group">
-            <h2 className="text-3xl md:text-5xl font-medium text-gray-800 group-hover:text-white mb-8 group-hover:scale-105 transition-all duration-300">
+            <h2 className="text-3xl md:text-5xl font-medium text-gray-800 group-hover:text-white mb-4 group-hover:scale-105 transition-all duration-300">
               MISI
             </h2>
             <ol className="space-y-1 text-gray-700 group-hover:text-white leading-relaxed text-sm md:text-base transition-all duration-300">
@@ -129,7 +168,7 @@ export default async function AboutPage() {
 
       {/* Address Section */}
       <div className="not-prose my-16">
-        <div className="grid md:grid-cols-2 gap-8 items-start">
+        <div className="grid md:grid-cols-2 gap-2 lg:gap-8 items-start">
           {/* Left Column - Question */}
           <div className=" bg-[#8E1616] p-9">
             <h2 className="text-4xl md:text-5xl font-medium text-gray-100 mb-2">

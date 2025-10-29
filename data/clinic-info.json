@@ -2,7 +2,7 @@
   "homepage": {
     "heroTitle": "\"Inspiring smiles in every encounter.\"",
     "heroSubtitle": "Open: sat, 3pm - 8pm   ||   sun, 9am - 8pm",
-    "heroDescription": "Kami percaya, setiap senyum berharga. Karena itu, kami menghadirkan pengalaman perawatan gigi yang nyaman, tenang, dan penuh perhatian. Dengan tim dokter berpengalaman serta teknologi modern, kami siap membantu Anda merawat kesehatan gigi sekaligus mempercantik senyum Anda.\n                               \nTemukan rasa nyaman baru dalam setiap kunjungan, dan biarkan kami membantu Anda tampil lebih percaya diri.",
+    "heroDescription": "Setiap senyum adalah harta yang tak ternilai. Di NoerDental, kami menghadirkan perawatan gigi yang tidak hanya nyaman dan tenang, tapi juga penuh perhatian khusus untuk Anda. Dengan dukungan tim dokter ahli serta teknologi modern, kami siap membantu Anda menjaga kesehatan gigi sekaligus memberikan sentuhan kecantikan pada senyum Anda.\n\nJangan lewatkan kesempatan merasakan perawatan gigi yang berbeda dan nyaman di setiap kunjungan. Bersama kami, wujudkan senyum percaya diri yang selalu Anda impikan.",
     "heroImage": "/api/images/service-1761268023779.jpg",
     "aboutTitle": "Kenapa Harus Noerdental?",
     "aboutDescription": "Noer Dental adalah klinik gigi modern yang mengutamakan kenyamanan, kepercayaan, dan hasil perawatan terbaik bagi setiap pasien. Dengan dukungan dokter gigi berpengalaman, teknologi perawatan terkini, dan suasana klinik yang bersih serta tenang, kami berkomitmen memberikan pengalaman perawatan gigi yang menyenangkan tanpa rasa takut.\nKami percaya bahwa senyum indah bukan hanya tentang estetika, tapi juga tentang rasa percaya diri dan kesehatan yang menyeluruh. Dari pemeriksaan rutin hingga perawatan ortodontik dan estetika gigi, Noer Dental siap membantu Anda mendapatkan senyum terbaik Anda.\n"
@@ -35,8 +35,10 @@
   ],
   "about": {
     "title": "Tentang Noerdental",
-    "description": "Noerdental didirikan dengan komitmen untuk memberikan perawatan gigi berkualitas tinggi.",
-    "values": ["Profesional", "Terpercaya", "Modern", "Ramah"]
+    "description": "Klinik Praktik NoerDental yang berlokasi strategis di Pasar Baru, Kabupaten Pesisir Selatan, Sumatra Barat, menghadirkan layanan kesehatan gigi profesional dengan pendekatan ramah dan terpercaya. Klinik kami menyediakan perawatan gigi lengkap mulai dari pemeriksaan rutin, pembersihan karang gigi, penanganan gusi, hingga perawatan estetika seperti pemutihan gigi. Didukung oleh tenaga medis berpengalaman dan peralatan modern, NoerDental berkomitmen memberikan pelayanan prima untuk kesehatan dan kenyamanan senyum Anda. Kami siap melayani berbagai kebutuhan perawatan gigi bagi keluarga dan masyarakat sekitar dengan harga terjangkau serta suasana nyaman. Kunjungi NoerDental untuk mendapatkan solusi kesehatan gigi yang tepat dan terpercaya di Pesisir Selatan.",
+    "values": [
+      ""
+    ]
   },
   "doctors": [
     {

@@ -144,7 +144,7 @@ export default function DentistGallery({ doctors }: { doctors: Doctor[] }) {
           </p>
 
           <div className="space-y-4 transition-all duration-500">
-            <div className="flex justify-between py-3 border-b border-gray-300">
+            <div className="flex justify-between">
               <span className="text-sm md:text-base text-gray-600">
                 Join Date
               </span>
@@ -152,7 +152,7 @@ export default function DentistGallery({ doctors }: { doctors: Doctor[] }) {
                 {selectedDoctor.joinDate}
               </span>
             </div>
-            <div className="flex justify-between py-3 border-b border-gray-300">
+            <div className="flex justify-between ">
               <span className="text-sm md:text-base text-gray-600">
                 Days Done
               </span>
