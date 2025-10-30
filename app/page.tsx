@@ -65,7 +65,7 @@ function HomePageContent({
         </div>
 
         <div className="mt-12 ml-[-2rem] lg:mx-[-6.8rem] relative overflow-hidden ">
-          <div className="aspect-[9/9] lg:aspect-[16/6]">
+          <div className="aspect-[6/3] lg:aspect-[16/6]">
             <Image
               src={(heroImage && heroImage.trim()) || fallbackHeroImage}
               alt="NOERDENTAL hero"
@@ -193,54 +193,62 @@ function HomePageContent({
             Lihat Semua →
           </Link>
         </div>
-
-        <div className="relative border-t border-b border-gray-300">
-          <div className="overflow-x-auto scrollbar-hide">
-            <div className="flex">
-              {services.length > 0 ? (
-                services.map((service) => (
-                  <div
-                    key={service.id}
-                    className="flex-shrink-0 w-[280px] md:w-[320px] bg-white border-r border-gray-300 first:border-l"
-                  >
-                    <div className="p-6">
-                      <div className="relative aspect-square overflow-hidden bg-gray-200">
-                        {service.imageUrl ? (
-                          <img
-                            src={service.imageUrl}
-                            alt={service.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400" />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                        <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
-                          <h3 className="text-xl font-bold leading-tight drop-shadow-lg">
-                            {service.name}
-                          </h3>
-                          {service.category && (
-                            <p className="text-sm font-medium opacity-90 drop-shadow-md">
-                              {service.category}
-                            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
+          <div className="order-1 hidden lg:block">
+            <p className="text-[1.3rem] md:text-xl text-black leading-relaxed pl-6">
+              Kami menyediakan layanan perawatan gigi—dari pencegahan hingga
+              perbaikan baik dari segi kesehatan maupun estetika untuk memenuhi
+              kebutuhan setiap pasien.
+            </p>
+          </div>
+          <div className="order-2 lg:col-span-2 relative border-t border-b border-gray-300">
+            <div className="overflow-x-auto scrollbar-hide">
+              <div className="flex">
+                {services.length > 0 ? (
+                  services.map((service) => (
+                    <div
+                      key={service.id}
+                      className="flex-shrink-0 w-[280px] md:w-[320px] bg-white border-r border-gray-300 first:border-l"
+                    >
+                      <div className="p-6">
+                        <div className="relative aspect-square overflow-hidden bg-gray-200">
+                          {service.imageUrl ? (
+                            <img
+                              src={service.imageUrl}
+                              alt={service.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400" />
                           )}
-                          <p className="text-lg font-bold drop-shadow-md">
-                            Rp{" "}
-                            {(typeof service.price === "number"
-                              ? service.price
-                              : service.price.toNumber()
-                            ).toLocaleString("id-ID")}
-                          </p>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                          <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
+                            <h3 className="text-xl font-bold leading-tight drop-shadow-lg">
+                              {service.name}
+                            </h3>
+                            {service.category && (
+                              <p className="text-sm font-medium opacity-90 drop-shadow-md">
+                                {service.category}
+                              </p>
+                            )}
+                            <p className="text-lg font-bold drop-shadow-md">
+                              Rp{" "}
+                              {(typeof service.price === "number"
+                                ? service.price
+                                : service.price.toNumber()
+                              ).toLocaleString("id-ID")}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="text-gray-500 text-sm p-8">
+                    Belum ada layanan aktif
                   </div>
-                ))
-              ) : (
-                <div className="text-gray-500 text-sm p-8">
-                  Belum ada layanan aktif
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
