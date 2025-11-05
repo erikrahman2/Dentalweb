@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAdmin = pathname?.startsWith("/admin");
+  const hideShell = pathname?.startsWith("/admin") || pathname?.startsWith("/dentist");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -54,7 +54,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     };
   }, [mobileOpen]);
 
-  if (isAdmin) {
+  if (hideShell) {
     return <>{children}</>;
   }
 
@@ -113,12 +113,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               >
                 Pict
               </Link>
-              <Link
-                href="/contact"
-                className="text-sm text-gray-600 hover:text-gray-900"
-              >
-                Contact
-              </Link>
+
               <Link
                 href="/admin"
                 className="text-sm text-gray-600 hover:text-gray-900"
@@ -221,16 +216,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 <span className="text-xl font-light text-gray-900">Pict</span>
                 <span className="text-xs text-gray-700">04</span>
               </Link>
-              <Link
-                href="/contact"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-between py-2 border-b border-gray-600"
-              >
-                <span className="text-xl font-light text-gray-900">
-                  Contact
-                </span>
-                <span className="text-xs text-gray-700">05</span>
-              </Link>
+
               <Link
                 href="/admin"
                 onClick={() => setMobileOpen(false)}

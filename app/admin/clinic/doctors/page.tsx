@@ -9,7 +9,7 @@ interface Doctor {
   email?: string;
   photo: string;
   joinDate: string;
-  daysDone: string;
+  description: string;
   hasPassword?: boolean;
   user?: {
     id: string;
@@ -129,7 +129,7 @@ export default function DoctorsAdminPage() {
         email: "",
         photo: "",
         joinDate: "",
-        daysDone: "",
+        description: "",
       },
     ]);
     setEditingIndex(newIndex);
@@ -292,16 +292,16 @@ export default function DoctorsAdminPage() {
                     </div>
                     <div>
                       <label className="block text-xs font-medium mb-1">
-                        Days Done
+                        Description
                       </label>
-                      <input
-                        type="text"
-                        value={doctor.daysDone}
+                      <textarea
+                        value={doctor.description}
                         onChange={(e) =>
-                          updateArrayItem(index, "daysDone", e.target.value)
+                          updateArrayItem(index, "description", e.target.value)
                         }
                         className="w-full p-2 border border-gray-300 text-sm"
-                        placeholder="123"
+                        placeholder="Enter doctor description"
+                        rows={3}
                       />
                     </div>
                   </div>
@@ -370,8 +370,7 @@ export default function DoctorsAdminPage() {
                       </p>
                     )}
                     <p className="text-gray-600 text-sm">
-                      Join: {doctor.joinDate || "-"} | Days Done:{" "}
-                      {doctor.daysDone || "-"}
+                      Join: {doctor.joinDate || "-"}
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">

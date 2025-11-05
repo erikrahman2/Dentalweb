@@ -1,14 +1,23 @@
-// ==========================================
-// File: app/about/page.tsx
-// ==========================================
+import fs from "fs/promises";
+import path from "path";
 import Image from "next/image";
 import DentistGallery from "./DentistGallery";
+
+interface DoctorProfile {
+  id: number;
+  name: string;
+  photo: string | null;
+  joinDate: string | null;
+  description: string | null;
+  email?: string;
+  hasPassword?: boolean;
+}
 
 interface Doctor {
   name: string;
   photo: string;
   joinDate: string;
-  daysDone: string;
+  description: string;
 }
 
 interface AboutData {
@@ -25,15 +34,40 @@ interface AboutData {
 
 export async function getAboutData(): Promise<AboutData> {
   try {
-    const fs = require("fs/promises");
-    const path = require("path");
+    // Fetch doctors from DoctorProfile API
+    const doctorsResponse = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/doctor-profiles`, {
+      cache: 'no-store', // Ensure fresh data
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-request': 'false'
+      },
+    });
+
+    let doctors: Doctor[] = [];
+    if (doctorsResponse.ok) {
+      const doctorsData: DoctorProfile[] = await doctorsResponse.json();
+      // Transform DoctorProfile data to match the expected interface
+      doctors = doctorsData.map((doc) => ({
+        name: doc.name,
+        photo: doc.photo || "/placeholder-doctor.jpg",
+        joinDate: new Date(doc.joinDate || "").toLocaleDateString("id-ID", {
+          year: "numeric",
+          month: "long"
+        }),
+        description: doc.description || "Dokter gigi profesional dengan pengalaman dalam berbagai perawatan gigi."
+      }));
+    }
+    
+    console.log("Fetched doctors:", doctors); // Debug log
+
+    // Fetch clinic info from JSON file for about and contact
     const dataFile = path.join(process.cwd(), "data", "clinic-info.json");
     const data = await fs.readFile(dataFile, "utf-8");
     const parsed = JSON.parse(data);
 
     return {
       about: parsed.about || {},
-      doctors: parsed.doctors || [],
+      doctors: doctors,
       contact: parsed.contact || {},
     };
   } catch (error) {
@@ -45,6 +79,7 @@ export async function getAboutData(): Promise<AboutData> {
     };
   }
 }
+
 
 export default async function AboutPage() {
   const { about, doctors, contact } = await getAboutData();
@@ -163,7 +198,7 @@ export default async function AboutPage() {
         </div>
       </div>
 
-      {/* Dentists Section */}
+      {/* Dentist Gallery Component */}
       {doctors.length > 0 && <DentistGallery doctors={doctors} />}
 
       {/* Address Section */}

@@ -20,8 +20,7 @@ export default function DynamicTitle() {
         return "ABOUT US";
       case "/gallery":
         return "PICT";
-      case "/contact":
-        return "CONTACT US";
+
       case "/admin":
         return "ADMIN";
       default:

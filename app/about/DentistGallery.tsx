@@ -9,7 +9,7 @@ interface Doctor {
   name: string;
   photo: string;
   joinDate: string;
-  daysDone: string;
+  description: string;
 }
 
 export default function DentistGallery({ doctors }: { doctors: Doctor[] }) {
@@ -41,7 +41,7 @@ export default function DentistGallery({ doctors }: { doctors: Doctor[] }) {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-8">
         {/* Left: Fixed Single Row Gallery */}
         <div className="w-full overflow-hidden">
-          {/* Counter and Reviews Label */}
+          {/* Counter Label */}
           <div className="mb-6">
             <div className="text-sm text-gray-500 mb-2">
               {String(selectedIndex + 1).padStart(2, "0")} /{" "}
@@ -51,7 +51,7 @@ export default function DentistGallery({ doctors }: { doctors: Doctor[] }) {
             {/* Mobile Label */}
             <div className="lg:hidden">
               <h2 className="text-2xl font-medium text-gray-900">
-                Our <span className="text-gray-700">Dentists</span>
+                Tim <span className="text-gray-700">Dokter</span>
               </h2>
             </div>
 
@@ -138,27 +138,55 @@ export default function DentistGallery({ doctors }: { doctors: Doctor[] }) {
             {selectedDoctor.name}
           </h3>
 
-          <p className="text-gray-700 mb-8 text-base md:text-lg leading-relaxed transition-all duration-500">
-            Professionals in their craft! All products were super amazing with
-            strong attention to details, comps and overall vibe
-          </p>
-
-          <div className="space-y-4 transition-all duration-500">
-            <div className="flex justify-between">
-              <span className="text-sm md:text-base text-gray-600">
-                Join Date
-              </span>
-              <span className="text-sm md:text-base font-semibold text-gray-900">
-                {selectedDoctor.joinDate}
-              </span>
+          <div className="space-y-6">
+            <div>
+              <h4 className="text-sm uppercase text-gray-500 font-medium mb-2">
+                Bergabung Sejak
+              </h4>
+              <p className="text-gray-900">{selectedDoctor.joinDate || "-"}</p>
             </div>
-            <div className="flex justify-between ">
-              <span className="text-sm md:text-base text-gray-600">
-                Days Done
-              </span>
-              <span className="text-sm md:text-base font-semibold text-gray-900">
-                {selectedDoctor.daysDone}
-              </span>
+
+            <div>
+              <h4 className="text-sm uppercase text-gray-500 font-medium mb-2">
+                Tentang Dokter
+              </h4>
+              <p className="text-gray-700 leading-relaxed">
+                {selectedDoctor.description ||
+                  "Informasi akan segera ditambahkan."}
+              </p>
+            </div>
+
+            <div className="pt-4">
+              <div className="h-px w-full bg-gray-200 mb-6"></div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-500">
+                  {selectedIndex + 1} dari {doctors.length} dokter
+                </span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() =>
+                      setSelectedIndex((prev) =>
+                        prev > 0 ? prev - 1 : doctors.length - 1
+                      )
+                    }
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    aria-label="Previous doctor"
+                  >
+                    ←
+                  </button>
+                  <button
+                    onClick={() =>
+                      setSelectedIndex((prev) =>
+                        prev < doctors.length - 1 ? prev + 1 : 0
+                      )
+                    }
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    aria-label="Next doctor"
+                  >
+                    →
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { generateOTP, sendOTPEmail } from "@/lib/email";
 
 // GET - List all dentists (Admin only)
 export async function GET() {
@@ -85,13 +86,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Generate OTP (6 digit number)
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const otpExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    const otp = generateOTP();
+    const otpExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     console.log("2. ✅ Generated OTP:", otp);
 
-    // Create dentist user
     const dentist = await prisma.user.create({
       data: {
         name,
@@ -105,7 +104,12 @@ export async function POST(request: Request) {
 
     console.log("3. ✅ Created dentist:", dentist.id);
 
-    // Send OTP email (in development, just log it)
+    const emailSent = await sendOTPEmail(email, name, otp);
+
+    if (!emailSent) {
+      console.warn("⚠️ Failed to send OTP email via configured providers");
+    }
+
     if (process.env.NODE_ENV === "development") {
       console.log("\n" + "=".repeat(50));
       console.log("🔑 OTP FOR DENTIST REGISTRATION");
@@ -117,17 +121,19 @@ export async function POST(request: Request) {
       console.log("=".repeat(50) + "\n");
     }
 
-    // ✅ CRITICAL: Return OTP in development mode
     return NextResponse.json(
       {
         success: true,
-        message: "Dentist created successfully",
+        message: emailSent
+          ? "Dentist created successfully"
+          : "Dentist created successfully, but OTP email failed to send",
         otp: process.env.NODE_ENV === "development" ? otp : undefined,
         dentist: {
           id: dentist.id,
           name: dentist.name,
           email: dentist.email,
         },
+        emailSent,
       },
       { status: 201 }
     );

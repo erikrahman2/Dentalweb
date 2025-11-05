@@ -104,6 +104,21 @@ model VisitService {
   @@index([serviceId])
 }
 
+model Patient {
+  id             Int      @id @default(autoincrement())
+  name           String
+  dateOfBirth    DateTime
+  gender         String
+  address        String   @db.Text
+  phoneNumber    String
+  medicalHistory String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([name])
+  @@index([phoneNumber])
+}
+
 model HomepageContent {
   id               Int               @id @default(1)
   heroTitle        String?
@@ -140,17 +155,17 @@ model FaqEntry {
 }
 
 model DoctorProfile {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String?  @unique
-  photo     String?
-  joinDate  String?
-  daysDone  String?
-  order     Int      @default(0)
-  userId    String?  @unique
-  user      User?    @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String?  @unique
+  photo       String?
+  joinDate    String?
+  description String?
+  order       Int      @default(0)
+  userId      String?  @unique
+  user        User?    @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model GalleryItem {

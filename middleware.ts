@@ -17,8 +17,8 @@ type JwtPayload = {
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Protect admin and dentist routes
-  if (pathname.startsWith("/admin") || pathname.startsWith("/dentist")) {
+  // Protect admin routes
+  if (pathname.startsWith("/admin")) {
     const token = req.cookies.get(COOKIE_NAME)?.value;
 
     if (!token) {
@@ -41,12 +41,7 @@ export async function middleware(req: NextRequest) {
         }
       }
 
-      // Dentist routes: only accessible by DOCTOR role
-      if (pathname.startsWith("/dentist")) {
-        if (user.role !== "DOCTOR") {
-          return NextResponse.redirect(new URL("/admin", req.url));
-        }
-      }
+
 
       return NextResponse.next();
     } catch {
@@ -60,5 +55,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/dentist/:path*"],
+  matcher: ["/admin/:path*"],
 };

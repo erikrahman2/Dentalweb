@@ -72,12 +72,13 @@ export async function GET(req: NextRequest) {
       };
     }
 
-    // Filter by current dentist if dentistOnly is true
-    if (dentistOnly) {
-      const session = await getSession();
-      if (session && session.role === "DOCTOR") {
-        where.createdByUserId = session.sub;
-      }
+    const session = await getSession();
+    // If the user is a DOCTOR, always filter by their ID
+    if (session?.role === "DOCTOR") {
+      where.OR = [
+        { createdByUserId: session.sub },  // Records they created
+        { doctorId: session.sub }          // Records assigned to them
+      ];
     }
 
     const visits = await prisma.visit.findMany({
@@ -243,6 +244,11 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const currentVisit = await prisma.visit.findUnique({
       where: { id },
       include: { services: { include: { service: true } } },
@@ -250,6 +256,13 @@ export async function PUT(req: NextRequest) {
 
     if (!currentVisit) {
       return NextResponse.json({ error: "Visit not found" }, { status: 404 });
+    }
+
+    // If user is DOCTOR, they can only edit their own records
+    if (session.role === "DOCTOR" && 
+        currentVisit.createdByUserId !== session.sub && 
+        currentVisit.doctorId !== session.sub) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
     const parse = UpdateVisitSchema.safeParse(data);

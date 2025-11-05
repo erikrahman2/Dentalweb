@@ -43,25 +43,25 @@
       "name": "Jakob Gronberg",
       "photo": "/api/images/service-1760982121156.jpg",
       "joinDate": "Jan, 1992",
-      "daysDone": "189"
+      "description": "Spesialis gigi berpengalaman dengan lebih dari 30 tahun praktik"
     },
     {
       "name": "erik",
       "photo": "/api/images/service-1760982133673.jpg",
       "joinDate": "2025",
-      "daysDone": "123"
+      "description": "Dokter gigi umum dengan fokus pada perawatan estetik"
     },
     {
       "name": "dr. pof",
       "photo": "/api/images/service-1759811805720.jpg",
       "joinDate": "2025-10",
-      "daysDone": ""
+      "description": "Spesialis ortodonti dengan keahlian dalam perawatan behel"
     },
     {
       "name": "dr. wall",
       "photo": "/api/images/service-1761268023779.jpg",
       "joinDate": "2025-10",
-      "daysDone": ""
+      "description": "Spesialis konservasi gigi dengan pengalaman dalam perawatan saluran akar"
     }
   ],
   "gallery": [
