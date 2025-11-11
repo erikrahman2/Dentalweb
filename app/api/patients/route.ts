@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   }
 
   const data = await request.json();
-  
+
   const patient = await prisma.patient.create({
     data: {
       name: data.name,
@@ -59,7 +59,7 @@ export async function PUT(request: Request) {
   }
 
   const data = await request.json();
-  
+
   const patient = await prisma.patient.update({
     where: { id: parseInt(id) },
     data: {

@@ -55,7 +55,7 @@ export default function DentistReportsPage() {
         setRows(data);
       }
     } catch (error) {
-      console.error('Failed to fetch visits:', error);
+      console.error("Failed to fetch visits:", error);
     } finally {
       setLoading(false);
     }
@@ -129,12 +129,16 @@ export default function DentistReportsPage() {
                 rows.map((visit) => (
                   <tr key={visit.id || visit.patientName} className="border-t">
                     <td className="px-3 py-2">
-                      {visit.date ? new Date(visit.date).toLocaleDateString("id-ID") : "-"}
+                      {visit.date
+                        ? new Date(visit.date).toLocaleDateString("id-ID")
+                        : "-"}
                     </td>
                     <td className="px-3 py-2">{visit.patientName}</td>
                     <td className="px-3 py-2">
                       {visit.services
-                        .map((vs) => vs.customName || vs.service?.name || 'Unknown')
+                        .map(
+                          (vs) => vs.customName || vs.service?.name || "Unknown"
+                        )
                         .join(", ")}
                     </td>
                     <td className="px-3 py-2 text-right">

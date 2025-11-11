@@ -13,7 +13,10 @@ interface PatientSearchProps {
   className?: string;
 }
 
-export default function PatientSearch({ onSelect, className = "" }: PatientSearchProps) {
+export default function PatientSearch({
+  onSelect,
+  className = "",
+}: PatientSearchProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch] = useDebounce(searchTerm, 300);
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -30,7 +33,9 @@ export default function PatientSearch({ onSelect, className = "" }: PatientSearc
 
       setIsLoading(true);
       try {
-        const res = await fetch(`/api/visits/patients?search=${encodeURIComponent(debouncedSearch)}`);
+        const res = await fetch(
+          `/api/visits/patients?search=${encodeURIComponent(debouncedSearch)}`
+        );
         const data = await res.json();
         setPatients(data);
       } catch (error) {
@@ -47,7 +52,10 @@ export default function PatientSearch({ onSelect, className = "" }: PatientSearc
   // Close suggestions when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestions(false);
       }
     }
@@ -93,7 +101,9 @@ export default function PatientSearch({ onSelect, className = "" }: PatientSearc
               ))}
             </ul>
           ) : searchTerm ? (
-            <div className="p-4 text-center text-gray-500">No patients found</div>
+            <div className="p-4 text-center text-gray-500">
+              No patients found
+            </div>
           ) : null}
         </div>
       )}

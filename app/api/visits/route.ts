@@ -76,8 +76,8 @@ export async function GET(req: NextRequest) {
     // If the user is a DOCTOR, always filter by their ID
     if (session?.role === "DOCTOR") {
       where.OR = [
-        { createdByUserId: session.sub },  // Records they created
-        { doctorId: session.sub }          // Records assigned to them
+        { createdByUserId: session.sub }, // Records they created
+        { doctorId: session.sub }, // Records assigned to them
       ];
     }
 
@@ -259,9 +259,11 @@ export async function PUT(req: NextRequest) {
     }
 
     // If user is DOCTOR, they can only edit their own records
-    if (session.role === "DOCTOR" && 
-        currentVisit.createdByUserId !== session.sub && 
-        currentVisit.doctorId !== session.sub) {
+    if (
+      session.role === "DOCTOR" &&
+      currentVisit.createdByUserId !== session.sub &&
+      currentVisit.doctorId !== session.sub
+    ) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 

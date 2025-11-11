@@ -13,9 +13,11 @@ export async function GET(req: NextRequest) {
 
     const doctors = await prisma.doctorProfile.findMany({
       where: {
-        user: isAdminRequest ? undefined : {
-          isActive: true
-        }
+        user: isAdminRequest
+          ? undefined
+          : {
+              isActive: true,
+            },
       },
       include: {
         user: {
@@ -49,10 +51,7 @@ export async function POST(req: NextRequest) {
     const { id, name, email, photo, joinDate, description } = body;
 
     if (!name) {
-      return NextResponse.json(
-        { error: "Name is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
     // Check if email is provided and valid
@@ -65,7 +64,11 @@ export async function POST(req: NextRequest) {
       });
 
       // Check if the email belongs to a different doctor
-      if (existingUser?.doctorProfile && id && existingUser.doctorProfile.id !== id) {
+      if (
+        existingUser?.doctorProfile &&
+        id &&
+        existingUser.doctorProfile.id !== id
+      ) {
         return NextResponse.json(
           { error: "Email already registered to another doctor" },
           { status: 400 }
@@ -98,7 +101,7 @@ export async function POST(req: NextRequest) {
               id: true,
               email: true,
               isActive: true,
-            }
+            },
           },
         },
       });
@@ -146,9 +149,9 @@ export async function POST(req: NextRequest) {
                 id: true,
                 email: true,
                 isActive: true,
-                otp: true
-              }
-            }
+                otp: true,
+              },
+            },
           },
         });
 
@@ -163,7 +166,11 @@ export async function POST(req: NextRequest) {
     });
 
     // If OTP was generated, send the email
-    if (transactionResult.otp && transactionResult.userEmail && transactionResult.userName) {
+    if (
+      transactionResult.otp &&
+      transactionResult.userEmail &&
+      transactionResult.userName
+    ) {
       console.log("Attempting to send OTP email...");
       const { success, error: emailError } = await sendOTPEmail(
         transactionResult.userEmail,
@@ -177,16 +184,18 @@ export async function POST(req: NextRequest) {
         if (transactionResult.doctor?.id) {
           await prisma.$transaction([
             prisma.user.delete({
-              where: { email: transactionResult.userEmail }
+              where: { email: transactionResult.userEmail },
             }),
             prisma.doctorProfile.delete({
-              where: { id: transactionResult.doctor.id }
-            })
+              where: { id: transactionResult.doctor.id },
+            }),
           ]);
         }
 
         return NextResponse.json(
-          { error: emailError || "Failed to send OTP email. Please try again." },
+          {
+            error: emailError || "Failed to send OTP email. Please try again.",
+          },
           { status: 500 }
         );
       }
@@ -197,17 +206,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(transactionResult.doctor);
   } catch (error: unknown) {
     console.error("Failed to create/update doctor:", error);
-    
+
     // Try to rollback if transaction was successful but something else failed
     if (transactionResult?.doctor?.id) {
       try {
         await prisma.$transaction([
           prisma.user.delete({
-            where: { email: transactionResult.userEmail }
+            where: { email: transactionResult.userEmail },
           }),
           prisma.doctorProfile.delete({
-            where: { id: transactionResult.doctor.id }
-          })
+            where: { id: transactionResult.doctor.id },
+          }),
         ]);
       } catch (rollbackError) {
         console.error("Failed to rollback changes:", rollbackError);
@@ -215,7 +224,12 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to create/update doctor" },
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create/update doctor",
+      },
       { status: 500 }
     );
   }

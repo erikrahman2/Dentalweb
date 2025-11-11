@@ -35,13 +35,18 @@ interface AboutData {
 export async function getAboutData(): Promise<AboutData> {
   try {
     // Fetch doctors from DoctorProfile API
-    const doctorsResponse = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/doctor-profiles`, {
-      cache: 'no-store', // Ensure fresh data
-      headers: {
-        'Content-Type': 'application/json',
-        'x-admin-request': 'false'
-      },
-    });
+    const doctorsResponse = await fetch(
+      `${
+        process.env.NEXTAUTH_URL || "http://localhost:3000"
+      }/api/doctor-profiles`,
+      {
+        cache: "no-store", // Ensure fresh data
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-request": "false",
+        },
+      }
+    );
 
     let doctors: Doctor[] = [];
     if (doctorsResponse.ok) {
@@ -52,12 +57,14 @@ export async function getAboutData(): Promise<AboutData> {
         photo: doc.photo || "/placeholder-doctor.jpg",
         joinDate: new Date(doc.joinDate || "").toLocaleDateString("id-ID", {
           year: "numeric",
-          month: "long"
+          month: "long",
         }),
-        description: doc.description || "Dokter gigi profesional dengan pengalaman dalam berbagai perawatan gigi."
+        description:
+          doc.description ||
+          "Dokter gigi profesional dengan pengalaman dalam berbagai perawatan gigi.",
       }));
     }
-    
+
     console.log("Fetched doctors:", doctors); // Debug log
 
     // Fetch clinic info from JSON file for about and contact
@@ -79,7 +86,6 @@ export async function getAboutData(): Promise<AboutData> {
     };
   }
 }
-
 
 export default async function AboutPage() {
   const { about, doctors, contact } = await getAboutData();

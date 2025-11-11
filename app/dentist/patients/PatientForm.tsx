@@ -18,7 +18,11 @@ type PatientFormProps = {
   onCancel: () => void;
 };
 
-export default function PatientForm({ patient, onSave, onCancel }: PatientFormProps) {
+export default function PatientForm({
+  patient,
+  onSave,
+  onCancel,
+}: PatientFormProps) {
   const [formData, setFormData] = useState<Omit<Patient, "id">>({
     name: patient?.name || "",
     dateOfBirth: patient ? patient.dateOfBirth : new Date(),
@@ -34,14 +38,19 @@ export default function PatientForm({ patient, onSave, onCancel }: PatientFormPr
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-lg max-w-2xl mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white p-6 rounded shadow-lg max-w-2xl mx-auto"
+    >
       <h2 className="text-xl font-semibold mb-4">
         {patient ? "Edit Patient" : "Add New Patient"}
       </h2>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Name
+          </label>
           <input
             type="text"
             value={formData.name}
@@ -52,21 +61,32 @@ export default function PatientForm({ patient, onSave, onCancel }: PatientFormPr
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Date of Birth
+          </label>
           <input
             type="date"
             value={formData.dateOfBirth.toISOString().split("T")[0]}
-            onChange={(e) => setFormData({ ...formData, dateOfBirth: new Date(e.target.value) })}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                dateOfBirth: new Date(e.target.value),
+              })
+            }
             required
             className="mt-1 block w-full rounded border border-gray-300 p-2"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Gender</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Gender
+          </label>
           <select
             value={formData.gender}
-            onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, gender: e.target.value })
+            }
             required
             className="mt-1 block w-full rounded border border-gray-300 p-2"
           >
@@ -76,10 +96,14 @@ export default function PatientForm({ patient, onSave, onCancel }: PatientFormPr
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Address</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Address
+          </label>
           <textarea
             value={formData.address}
-            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, address: e.target.value })
+            }
             required
             rows={3}
             className="mt-1 block w-full rounded border border-gray-300 p-2"
@@ -87,21 +111,29 @@ export default function PatientForm({ patient, onSave, onCancel }: PatientFormPr
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Phone Number
+          </label>
           <input
             type="tel"
             value={formData.phoneNumber}
-            onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, phoneNumber: e.target.value })
+            }
             required
             className="mt-1 block w-full rounded border border-gray-300 p-2"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Medical History</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Medical History
+          </label>
           <textarea
             value={formData.medicalHistory}
-            onChange={(e) => setFormData({ ...formData, medicalHistory: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, medicalHistory: e.target.value })
+            }
             rows={4}
             className="mt-1 block w-full rounded border border-gray-300 p-2"
           />

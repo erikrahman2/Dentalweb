@@ -47,10 +47,10 @@ export default function PatientList() {
 
   const handleSave = async (patientData: Omit<Patient, "id">) => {
     try {
-      const url = editingPatient 
+      const url = editingPatient
         ? `/api/patients?id=${editingPatient.id}`
         : "/api/patients";
-      
+
       const response = await fetch(url, {
         method: editingPatient ? "PUT" : "POST",
         headers: {

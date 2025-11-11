@@ -12,14 +12,14 @@ export async function GET(req: NextRequest) {
 
     // Mencari unique patient names dari tabel visits yang cocok dengan search term
     const patients = await prisma.visit.groupBy({
-      by: ['patientName'],
+      by: ["patientName"],
       where: {
         patientName: {
           contains: search,
         },
       },
       orderBy: {
-        patientName: 'asc',
+        patientName: "asc",
       },
       take: 10, // Limit hasil pencarian
     });

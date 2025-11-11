@@ -76,9 +76,9 @@ export async function sendOTPEmail(
 ): Promise<{ success: boolean; error?: string }> {
   if (!process.env.RESEND_API_KEY) {
     console.error("RESEND_API_KEY is not configured in environment variables");
-    return { 
-      success: false, 
-      error: "Email service not configured properly" 
+    return {
+      success: false,
+      error: "Email service not configured properly",
     };
   }
 
@@ -86,40 +86,41 @@ export async function sendOTPEmail(
 
   try {
     const { text, html } = buildEmailContent(name, otp);
-    
+
     const emailConfig = {
       from: "Noer Dental <onboarding@resend.dev>",
       to: [email],
       subject: "Kode OTP - Setup Password Noer Dental",
       text,
       html,
-      tags: [{ name: "category", value: "otp" }]
+      tags: [{ name: "category", value: "otp" }],
     };
 
     console.log("📧 Sending email with config:", {
       from: emailConfig.from,
       to: emailConfig.to,
-      subject: emailConfig.subject
+      subject: emailConfig.subject,
     });
 
     const { data, error } = await resend.emails.send(emailConfig);
 
     if (error) {
       console.error("❌ Failed to send email:", error);
-      return { 
-        success: false, 
-        error: `Failed to send email: ${error.message}` 
+      return {
+        success: false,
+        error: `Failed to send email: ${error.message}`,
       };
     }
 
     console.log("✅ Email sent successfully!", data?.id);
     return { success: true };
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error occurred";
     console.error("❌ Error sending email:", errorMessage);
-    return { 
-      success: false, 
-      error: `Email service error: ${errorMessage}` 
+    return {
+      success: false,
+      error: `Email service error: ${errorMessage}`,
     };
   }
 }

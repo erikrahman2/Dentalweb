@@ -8,7 +8,8 @@ import Image from "next/image";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const hideShell = pathname?.startsWith("/admin") || pathname?.startsWith("/dentist");
+  const hideShell =
+    pathname?.startsWith("/admin") || pathname?.startsWith("/dentist");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);

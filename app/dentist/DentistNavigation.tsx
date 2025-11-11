@@ -18,7 +18,7 @@ export default function DentistNavigation() {
               </Link>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                <Link
+              <Link
                 href="/dentist/reports"
                 className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
                   pathname.includes("/dentist/reports")

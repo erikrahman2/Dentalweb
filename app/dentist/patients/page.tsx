@@ -173,7 +173,7 @@ export default function PatientRecordsPage() {
       }
 
       // Validate services
-      const validServices = form.services.filter(s => s.serviceId !== "");
+      const validServices = form.services.filter((s) => s.serviceId !== "");
       if (validServices.length === 0) {
         throw new Error("Please select at least one service");
       }
@@ -182,42 +182,55 @@ export default function PatientRecordsPage() {
       validServices.forEach((service, index) => {
         if (service.serviceId === "custom") {
           if (!service.customName?.trim()) {
-            throw new Error(`Service #${index + 1}: Custom service name is required`);
+            throw new Error(
+              `Service #${index + 1}: Custom service name is required`
+            );
           }
           if (!service.customPrice || service.customPrice <= 0) {
-            throw new Error(`Service #${index + 1}: Custom service price must be greater than 0`);
+            throw new Error(
+              `Service #${
+                index + 1
+              }: Custom service price must be greater than 0`
+            );
           }
         }
         if (!service.quantity || service.quantity <= 0) {
-          throw new Error(`Service #${index + 1}: Quantity must be greater than 0`);
+          throw new Error(
+            `Service #${index + 1}: Quantity must be greater than 0`
+          );
         }
       });
 
       const payload: VisitPayload = {
         patientName: form.patientName,
-        services: validServices.map((s) => {
-          if (s.serviceId === "custom") {
-            if (!s.customName || !s.customPrice) {
-              throw new Error("Custom service requires name and price");
+        services: validServices
+          .map((s) => {
+            if (s.serviceId === "custom") {
+              if (!s.customName || !s.customPrice) {
+                throw new Error("Custom service requires name and price");
+              }
+              return {
+                serviceId: "custom",
+                quantity: Number(s.quantity),
+                customName: s.customName,
+                customPrice: Number(s.customPrice),
+              };
             }
             return {
-              serviceId: "custom",
-              quantity: Number(s.quantity),
-              customName: s.customName,
-              customPrice: Number(s.customPrice)
+              serviceId: s.serviceId,
+              quantity: Number(s.quantity) || 1,
             };
-          }
-          return {
-            serviceId: s.serviceId,
-            quantity: Number(s.quantity) || 1
-          };
-        }).filter(service => (service.serviceId === "custom" ? 
-          service.customName && service.customPrice : service.serviceId)),
+          })
+          .filter((service) =>
+            service.serviceId === "custom"
+              ? service.customName && service.customPrice
+              : service.serviceId
+          ),
         paymentMethod: form.paymentMethod || "cash",
         status: form.status || "paid",
         notes: form.notes || "",
         discount: Number(form.discount) || 0,
-        date: form.date || new Date().toISOString().split('T')[0],
+        date: form.date || new Date().toISOString().split("T")[0],
       };
 
       const method = editingVisit ? "PUT" : "POST";
@@ -236,8 +249,11 @@ export default function PatientRecordsPage() {
         if (error.error?.fieldErrors) {
           const fieldErrors = error.error.fieldErrors;
           const errorMessage = Object.entries(fieldErrors)
-            .map(([field, errors]) => `${field}: ${(errors as string[]).join(', ')}`)
-            .join('\n');
+            .map(
+              ([field, errors]) =>
+                `${field}: ${(errors as string[]).join(", ")}`
+            )
+            .join("\n");
           throw new Error(errorMessage);
         }
         throw new Error(error.message || "Failed to save");
@@ -309,49 +325,45 @@ export default function PatientRecordsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Search Filters */}
-      <div className="flex flex-col space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Patient Name
-            </label>
-            <input
-              type="text"
-              value={searchName}
-              onChange={(e) => setSearchName(e.target.value)}
-              className="w-full p-3 border border-gray-300 focus:outline-none focus:border-black"
-              placeholder="Search by patient name"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Date</label>
-            <input
-              type="date"
-              value={searchDate}
-              onChange={(e) => setSearchDate(e.target.value)}
-              className="w-full p-3 border border-gray-300 focus:outline-none focus:border-black"
-            />
-          </div>
-          <div className="flex items-end">
-            <button
-              onClick={() => {
-                setIsAddingNew(true);
-                setTimeout(() => {
-                  const element = document.getElementById("edit-form");
-                  if (element) {
-                    element.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    });
-                  }
-                }, 100);
-              }}
-              className="w-full px-6 py-3 bg-black text-white font-medium hover:bg-gray-800 transition-colors"
-            >
-              + Add Patient Visit
-            </button>
-          </div>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold">Patient Reports</h1>
+          <p className="text-gray-600">View patient visit reports</p>
+        </div>
+        <button
+          onClick={() => {
+            setIsAddingNew(true);
+            setTimeout(() => {
+              const element = document.getElementById("edit-form");
+              if (element) {
+                element.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }, 100);
+          }}
+          className="px-6 py-2 bg-black text-white font-medium hover:bg-gray-800 transition-colors"
+        >
+          + Add Patient Visit
+        </button>
+      </div>
+
+      {/* Search */}
+      <div className="bg-white p-4 rounded-md border">
+        <div className="flex flex-col md:flex-row gap-4">
+          <input
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+            className="w-full border rounded-md px-3 py-2"
+            placeholder="Patient Name"
+          />
+          <input
+            type="date"
+            value={searchDate}
+            onChange={(e) => setSearchDate(e.target.value)}
+            className="w-full border rounded-md px-3 py-2"
+          />
         </div>
       </div>
 
@@ -611,105 +623,94 @@ export default function PatientRecordsPage() {
         </div>
       )}
 
-      {/* Results Table */}
-      <div className="border border-gray-300 overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-100 border-b border-gray-300">
-            <tr>
-              <th className="px-6 py-4 text-left text-sm font-bold text-black">
-                Date
-              </th>
-              <th className="px-6 py-4 text-left text-sm font-bold text-black">
-                Patient
-              </th>
-              <th className="px-6 py-4 text-left text-sm font-bold text-black">
-                Services
-              </th>
-              <th className="px-6 py-4 text-left text-sm font-bold text-black">
-                Price
-              </th>
-              <th className="px-6 py-4 text-left text-sm font-bold text-black">
-                Payment
-              </th>
-              <th className="px-6 py-4 text-left text-sm font-bold text-black">
-                Status
-              </th>
-              <th className="px-6 py-4 text-center text-sm font-bold text-black">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length === 0 ? (
+      {/* Table */}
+      <div className="bg-white border rounded-md">
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead className="bg-gray-100 text-gray-700">
               <tr>
-                <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
-                  No patient records yet
-                </td>
+                <th className="text-left px-3 py-2">Date</th>
+                <th className="text-left px-3 py-2">Patient</th>
+                <th className="text-left px-3 py-2">Services</th>
+                <th className="text-right px-3 py-2">Price</th>
+                <th className="text-left px-3 py-2">Payment</th>
+                <th className="text-left px-3 py-2">Status</th>
+                <th className="text-left px-3 py-2">Doctor</th>
+                <th className="text-center px-3 py-2">Actions</th>
               </tr>
-            ) : (
-              rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="border-b border-gray-200 hover:bg-gray-50"
-                >
-                  <td className="px-6 py-4">
-                    {row.date
-                      ? new Date(row.date).toLocaleDateString()
-                      : "Not set"}
-                  </td>
-                  <td className="px-6 py-4 text-black font-medium">
-                    {row.patientName}
-                  </td>
-                  <td className="px-6 py-4">
-                    {row.services.map((service: VisitService, i) => (
-                      <div 
-                        key={i} 
-                        className="relative group cursor-help"
-                      >
-                        <span>{service.service?.name || service.customName}</span>
-                        <div className="invisible group-hover:visible absolute z-10 w-48 p-2 mt-1 text-sm bg-gray-900 text-white rounded-lg shadow-lg">
-                          <p><strong>Service:</strong> {service.service?.name || service.customName}</p>
-                          <p><strong>Quantity:</strong> {service.quantity}x</p>
-                          <p><strong>Price:</strong> Rp{(service.customPrice || (service.service?.price || 0)).toLocaleString()}</p>
-                          <p><strong>Total:</strong> Rp{((service.customPrice || (service.service?.price || 0)) * service.quantity).toLocaleString()}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </td>
-                  <td className="px-6 py-4">Rp{row.total.toLocaleString()}</td>
-                  <td className="px-6 py-4">{row.paymentMethod || "cash"}</td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-block px-2 py-1 text-xs font-semibold rounded ${
-                        row.status === "paid"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
-                      }`}
-                    >
-                      {row.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2 justify-center">
-                      <button
-                        onClick={() => handleEdit(row)}
-                        className="text-sm text-blue-600 hover:text-blue-800 font-medium"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(row.id, row.patientName)}
-                        className="text-sm text-red-600 hover:text-red-800 font-medium"
-                      >
-                        Delete
-                      </button>
-                    </div>
+            </thead>
+            <tbody>
+              {rows.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={8}
+                    className="px-3 py-6 text-center text-gray-500"
+                  >
+                    No reports found.
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                rows.map((visit) => (
+                  <tr key={visit.id || visit.patientName} className="border-t">
+                    <td className="px-3 py-2">
+                      {visit.date
+                        ? new Date(visit.date).toLocaleDateString("id-ID")
+                        : "-"}
+                    </td>
+                    <td className="px-3 py-2">{visit.patientName}</td>
+                    <td className="px-3 py-2 relative group">
+                      <span className="cursor-pointer">
+                        {visit.services
+                          .map(
+                            (vs) => {
+                              const name = vs.customName || vs.service?.name || "Unknown";
+                              return vs.quantity > 1 ? `${name} x${vs.quantity}` : name;
+                            }
+                          )
+                          .join(", ")}
+                      </span>
+                      <div className="absolute left-0 top-full mt-1 bg-black text-white text-xs rounded p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 min-w-max">
+                        {visit.services.map((vs, idx) => {
+                          const name = vs.customName || vs.service?.name || "Unknown";
+                          const price = vs.customPrice || vs.service?.price || 0;
+                          return (
+                            <div key={idx}>
+                              {name}: Qty {vs.quantity} - Rp{(price * vs.quantity).toLocaleString()}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </td>
+                    <td className="px-3 py-2 text-right">
+                      Rp {visit.total.toLocaleString("id-ID")}
+                    </td>
+                    <td className="px-3 py-2">{visit.paymentMethod || "-"}</td>
+                    <td className="px-3 py-2">{visit.status || "pending"}</td>
+                    <td className="px-3 py-2">
+                      {visit.doctor?.name || visit.createdBy?.name || "-"}
+                    </td>
+                    <td className="px-3 py-2">
+                      <div className="flex gap-2 justify-center">
+                        <button
+                          onClick={() => handleEdit(visit)}
+                          className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(visit.id, visit.patientName)}
+                          className="text-sm text-red-600 hover:text-red-800 font-medium"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

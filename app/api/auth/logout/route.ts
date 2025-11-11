@@ -3,8 +3,8 @@ import { clearSession } from "@/lib/auth";
 
 export async function POST() {
   clearSession();
-  return NextResponse.json({ 
+  return NextResponse.json({
     ok: true,
-    redirect: "/login"  // Add redirect URL in response
+    redirect: "/login", // Add redirect URL in response
   });
 }

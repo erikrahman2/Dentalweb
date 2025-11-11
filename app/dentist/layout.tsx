@@ -9,7 +9,7 @@ export default async function DentistLayout({
   children: React.ReactNode;
 }) {
   const session = await getSession();
-  
+
   if (!session || session.role !== "DOCTOR") {
     redirect("/login");
   }
@@ -54,14 +54,16 @@ export default async function DentistLayout({
           <div className="border-t border-gray-200">
             <div className="p-4">
               <div className="mb-4">
-                <div className="font-medium text-sm text-gray-900">{session.name}</div>
+                <div className="font-medium text-sm text-gray-900">
+                  {session.name}
+                </div>
                 <div className="mt-1">
                   <span className="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-800">
                     {session.role}
                   </span>
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <Link
                   href="/"

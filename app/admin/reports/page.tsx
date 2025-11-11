@@ -137,7 +137,10 @@ export default function ReportsPage() {
     }));
   };
 
-  const updateService = (index: number, update: Partial<VisitServicePayload>) => {
+  const updateService = (
+    index: number,
+    update: Partial<VisitServicePayload>
+  ) => {
     setForm((f) => ({
       ...f,
       services: f.services.map((svc, i) =>
